@@ -11,13 +11,7 @@ import { connect } from "react-redux";
 import { getShopData } from "../../../AppStore/actions/shop.activity";
 
 function Form({ shopData, getShopData }) {
-  const [categories, setCategories] = useState([]);
-  const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' }
-  ];
-  const {data} = shopData;
+  const { data } = shopData;
   useEffect(() => {
     getShopData();
   }, []);
@@ -50,15 +44,24 @@ function Form({ shopData, getShopData }) {
               <Option>Material Tailwind Vue</Option>
               <Option>Material Tailwind Angular</Option>
               <Option>Material Tailwind Svelte</Option> */}
-              {/* {data?.categoriesData?.map((item) => (
-                <Option key={item._id} value={item.title}  className="flex items-center gap-2">{item.title}</Option>
-              ))} */}
-              {options.map(({ value, label }) => (
-                <Option key={value} value={`${value}`}>{label}</Option>
-              ))}
+              {!shopData.isLoading && shopData.data ? (
+                data?.categoriesData?.map((item) => (
+                  <Option
+                    key={item._id}
+                    value={item.title}
+                    className="flex items-center gap-2"
+                  >
+                    {item.title}
+                  </Option>
+                ))
+              ) : (
+                <Option>Loading</Option>
+              )}
             </Select>
             <Textarea label="Add Description" />
-            <Button size="lg" className="w-max h-max">Submit</Button>
+            <Button size="lg" className="w-max h-max">
+              Submit
+            </Button>
           </div>
         </div>
       </section>
