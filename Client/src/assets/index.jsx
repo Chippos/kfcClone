@@ -43,6 +43,12 @@ import Guide3 from './images/Pushi-guide-3.png';
 import LoginBg from './images/login-bg.png'
 import SignupBg from './images/sign-up.png'
 import Burger from './images/burger.jpg'
+import Sharing from './images/sharing-bg.jpg'
+import everydayvalue from './images/everydayvalue.jpg'
+import alacart from './images/alacart.jpg'
+import snacks from './images/snacks&bavrages.jpg'
+
+
 
 
 export {
@@ -91,5 +97,8 @@ export {
     Guide3,
     LoginBg,
     SignupBg,
-
+    Sharing,
+    everydayvalue,
+    alacart,
+    snacks,
 }

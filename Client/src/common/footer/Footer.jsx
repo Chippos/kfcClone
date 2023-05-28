@@ -266,7 +266,7 @@ function Footer() {
           </div>
           <div className="mt-8 flex justify-between items-center gap-5 flex-wrap">
             <a href="/">
-                <img src={logo} alt="" />
+                <img className="w-24" src={logo} alt="" />
             </a>
             <div>
               <p className="text-[#263238] text-base font-medium">

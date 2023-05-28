@@ -36,6 +36,10 @@ import {
   Guide1,
   Guide2,
   Guide3,
+  Sharing,
+  everydayvalue,
+  alacart,
+  snacks,
 } from "../assets";
 
 const navLinks = [
@@ -109,27 +113,27 @@ const popularCategories = [
 const hoverCards = [
   {
     id: 1,
-    title: "Video Editig",
-    info: "Video editing includes cutting segments (trimming), re-sequencing clips, and adding transitions and other special effects. Linear video editing uses video tape and is edited in a very linear way. Several video clips from different tapes are recorded to one single tape in the order that they will appear",
-    img: guide1,
+    title: "Sharing",
+    info: "Explore Related Produtcs in Shop",
+    img: Sharing,
   },
   {
     id: 2,
-    title: "UI/UX",
-    info: "User experience design is the process of defining the experience a user would go through when interacting with a company, its services, and its products. Design decisions in UX design are often driven by research, data analysis, and test results rather than aesthetic preferences and opinions.",
-    img: guide2,
+    title: "Ala Cart & Combos",
+    info: "Explore Related Produtcs in Shop",
+    img: alacart,
   },
   {
     id: 3,
-    title: "Social Marketing",
-    info: "What Is Social Media Marketing (SMM)? Social media marketing (SMM) (also known as digital marketing and e-marketing) is the use of social media—the platforms on which users build social networks and share information—to build a company's brand, increase sales, and drive website traffic.",
-    img: guide3,
+    title: "EveryDay Value",
+    info: "Explore Related Produtcs in Shop",
+    img: everydayvalue,
   },
   {
     id: 4,
-    title: "WordPress",
-    info: "WordPress is a free and open-source content management system written in hypertext preprocessor language and paired with a MySQL or MariaDB database with supported HTTPS. Features include a plugin architecture and a template system, referred to within WordPress as 'Themes'",
-    img: guide4,
+    title: "Snacks",
+    info: "Explore Related Produtcs in Shop",
+    img: snacks,
   },
 ];
 

@@ -39,11 +39,6 @@ function Form({ shopData, getShopData }) {
               //   })
               // }
             >
-              {/* <Option>Material Tailwind HTML</Option>
-              <Option>Material Tailwind React</Option>
-              <Option>Material Tailwind Vue</Option>
-              <Option>Material Tailwind Angular</Option>
-              <Option>Material Tailwind Svelte</Option> */}
               {!shopData.isLoading && shopData.data ? (
                 data?.categoriesData?.map((item) => (
                   <Option

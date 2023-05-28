@@ -24,7 +24,10 @@ function navbar() {
       <Navbar className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 sticky top-0 w-full z-50 max-w-full shadow-none">
         <div className="container 2xl:max-w-screen-2xl flex flex-wrap lg:flex-nowrap items-center justify-between mx-auto">
           <Link to="/">
-            <img src={logo} alt="" />
+            <div className="flex justify-start items-center gap-2">
+              <img className="w-24" src={logo} alt="" />
+              <p className="text-4xl font-bold text-gray-800">KF<span className="text-[#0096D8]">C</span></p>
+            </div>
           </Link>
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">
