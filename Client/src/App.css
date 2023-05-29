@@ -93,17 +93,32 @@ ul.navlinks li a.active {
 .spinnerCustom {
   width: 56px;
   height: 56px;
-  border-radius: 50%;
-  border: 9px solid;
-  border-color: #dbdcef;
-  border-right-color: #0096d8;
   margin: auto;
-  animation: spinner-d3wgkg 1s infinite linear;
+  display: grid;
+  border: 4.5px solid #0000;
+  border-radius: 50%;
+  border-right-color: #0096d8;
+  animation: spinner-a4dj62 1s infinite linear;
 }
 
-@keyframes spinner-d3wgkg {
-  to {
-    transform: rotate(1turn);
+.spinnerCustom::before,
+.spinnerCustom::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 2.2px;
+  border: inherit;
+  border-radius: 50%;
+  animation: spinner-a4dj62 2s infinite;
+}
+
+.spinnerCustom::after {
+  margin: 8.9px;
+  animation-duration: 3s;
+}
+
+@keyframes spinner-a4dj62 {
+  100% {
+     transform: rotate(1turn);
   }
 }
 

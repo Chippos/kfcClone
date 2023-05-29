@@ -55,21 +55,6 @@ const navLinks = [
   },
   {
     id: 3,
-    title: "Hire Talents",
-    href: "/hiretalents",
-  },
-  {
-    id: 1,
-    title: "Blogs",
-    href: "/blogs",
-  },
-  {
-    id: 1,
-    title: "Community",
-    href: "/community",
-  },
-  {
-    id: 1,
     title: "Contacts",
     href: "/contacts",
   },

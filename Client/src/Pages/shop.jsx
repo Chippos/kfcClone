@@ -16,7 +16,6 @@ function shop({ shopData, getShopData }) {
   // const [products, setProducts] = useState([]);
 
   const handleCategory = (value) => {
-    // setCategory(value);
     console.log(value);
   };
 
@@ -54,7 +53,7 @@ function shop({ shopData, getShopData }) {
       <div className='container mx-auto my-4 px-4'>
         <div className='flex justify-center items-center gap-6'>
           {shopData?.data?.categoriesData?.map((item) => (
-            <Button key={item._id}>{item.title}</Button>
+            <Button key={item._id} onClick={()=> handleCategory(item.title)}>{item.title}</Button>
           ))}
         </div>
       </div>

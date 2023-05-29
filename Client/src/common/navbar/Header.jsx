@@ -6,10 +6,11 @@ import {
   MobileNav,
   Typography,
   Button,
+  Badge,
 } from "@material-tailwind/react";
 import { Link, NavLink } from "react-router-dom";
 
-function navbar() {
+function navbar({ openDrawer }) {
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
@@ -26,7 +27,9 @@ function navbar() {
           <Link to="/">
             <div className="flex justify-start items-center gap-2">
               <img className="w-24" src={logo} alt="" />
-              <p className="text-4xl font-bold text-gray-800">KF<span className="text-[#0096D8]">C</span></p>
+              <p className="text-4xl font-bold text-gray-800">
+                KF<span className="text-[#0096D8]">C</span>
+              </p>
             </div>
           </Link>
           <div className="flex items-center gap-4">
@@ -42,6 +45,14 @@ function navbar() {
                     </NavLink>
                   </Typography>
                 ))}
+                <Typography as="li">
+                  <Button
+                    onClick={openDrawer}
+                    className="block py-2 pl-3 pr-4 text-gray-800 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#0096D8] lg:p-0 font-semibold bg-transparent shadow-none text-base capitalize hover:shadow-none !overflow-visible"
+                  >
+                    <Badge content="5" className="min-w-[20px] min-h-[20px] top-0 right-0">Cart</Badge>
+                  </Button>
+                </Typography>
                 <Typography as="li">
                   <NavLink
                     to="/login"
