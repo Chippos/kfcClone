@@ -7,28 +7,16 @@ import {
   Button,
 } from '@material-tailwind/react';
 import { connect } from 'react-redux';
-import { getShopData } from '../AppStore/actions/shop.activity';
+import { getShopData, addToCart } from '../AppStore/actions/shop.activity';
 import { useEffect } from 'react';
-import { SHOP_DATA } from '../AppStore/constants';
 
-function shop({ shopData, getShopData }) {
-  // const [category, setCategory] = useState([]);
-  // const [products, setProducts] = useState([]);
+function shop({ shopData, getShopData, addToCart }) {
 
   const handleCategory = (value) => {
     console.log(value);
   };
-
-  // const getCategory = async () => {
-  //   let res = await getData("/api/shop");
-  //   const { categoriesData } = res;
-  //   const { productsData } = res;
-
-  //   const categories = categoriesData.map((item) => item.title);
-  //   setCategory([...categories]);
-  //   setProducts([...products]);
-  // };
-
+  console.log(shopData)
+  
   useEffect(() => {
     getShopData();
   }, []);
@@ -78,7 +66,7 @@ function shop({ shopData, getShopData }) {
                   <Typography>{item.description}</Typography>
                 </CardBody>
                 <CardFooter className='pt-0 mt-auto flex items-center justify-between'>
-                  <Button>Add to Cart</Button>
+                  <Button onClick={()=> addToCart(item.category)}>Add to Cart</Button>
                   {`Rs. ${item.price}/-`}
                 </CardFooter>
               </Card>
@@ -96,4 +84,11 @@ const mapStateToProps = (state) => ({
   shopData: state.shop,
 });
 
-export default connect(mapStateToProps, { getShopData })(shop);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getShopData: data => dispatch(getShopData(data)),
+    addToCart:  data => dispatch(addToCart(data))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(shop);

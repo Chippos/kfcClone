@@ -11,7 +11,9 @@ function LayoutIndex() {
 
   return (
     <>
-      <RightDrawer closeDrawer={closeDrawer} open={open}/>
+      <div className={` transition-all duration-300 ease-linear  ${open ? 'z-[999] fixed top-0 bottom-0 left-0 right-0 w-full' : ''}`}>
+        <RightDrawer closeDrawer={closeDrawer} open={open}/>
+      </div>
       {/* <Cart closeDrawer={closeDrawer}/> */}
       <Header openDrawer={openDrawer}/>
       <Outlet />

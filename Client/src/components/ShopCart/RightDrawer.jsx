@@ -20,7 +20,7 @@ function RightDrawer({ closeDrawer, open }) {
             Material Tailwind
           </Typography>
           <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-            <i class="fa-regular fa-x"></i>
+            <i className="fa-regular fa-x"></i>
           </IconButton>
         </div>
         <Typography color="gray" className="mb-8 pr-4 font-normal">

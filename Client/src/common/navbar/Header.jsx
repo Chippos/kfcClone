@@ -52,7 +52,10 @@ function navbar({ openDrawer }) {
                   >
                     <Badge
                       content="5"
-                      className="min-w-[20px] min-h-[20px] top-0 right-0"
+                      placement="top-end"
+                      overlap="circular"
+                      withBorder
+                      className="top-0 right-0"
                     >
                       Cart
                     </Badge>
@@ -136,7 +139,10 @@ function navbar({ openDrawer }) {
               >
                 <Badge
                   content="5"
-                  className="min-w-[20px] min-h-[20px] top-0 right-0"
+                  placement="top-end"
+                  overlap="circular"
+                  withBorder
+                  className="top-0 right-0"
                 >
                   Cart
                 </Badge>

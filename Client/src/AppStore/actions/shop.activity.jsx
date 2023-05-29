@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SHOP_DATA, SHOP_DATA_ERROR } from "../constants";
+import { SHOP_DATA, SHOP_DATA_ERROR, ADD_TO_CART } from "../constants";
 
 export const getShopData = () => async (dispatch) => {
   try {
@@ -16,3 +16,11 @@ export const getShopData = () => async (dispatch) => {
     });
   }
 };
+
+export const addToCart = (data)=>{
+  console.log('actions', data)
+  return{
+    type: ADD_TO_CART,
+    payload: data,
+  }
+}

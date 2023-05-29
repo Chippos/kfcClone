@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { getShopData } from "../../../AppStore/actions/shop.activity";
 function HeroSection({ shopData, getShopData }) {
     
-    console.log(shopData)
   useEffect(() => {
     getShopData();
   }, []);
