@@ -50,7 +50,12 @@ function navbar({ openDrawer }) {
                     onClick={openDrawer}
                     className="block py-2 pl-3 pr-4 text-gray-800 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#0096D8] lg:p-0 font-semibold bg-transparent shadow-none text-base capitalize hover:shadow-none !overflow-visible"
                   >
-                    <Badge content="5" className="min-w-[20px] min-h-[20px] top-0 right-0">Cart</Badge>
+                    <Badge
+                      content="5"
+                      className="min-w-[20px] min-h-[20px] top-0 right-0"
+                    >
+                      Cart
+                    </Badge>
                   </Button>
                 </Typography>
                 <Typography as="li">
@@ -124,6 +129,19 @@ function navbar({ openDrawer }) {
                 </NavLink>
               </Typography>
             ))}
+            <Typography as="li">
+              <Button
+                onClick={openDrawer}
+                className="block py-2 pl-3 pr-4 text-gray-800 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#0096D8] lg:p-0 font-semibold bg-transparent shadow-none text-base capitalize hover:shadow-none !overflow-visible"
+              >
+                <Badge
+                  content="5"
+                  className="min-w-[20px] min-h-[20px] top-0 right-0"
+                >
+                  Cart
+                </Badge>
+              </Button>
+            </Typography>
             <Typography as="li">
               <NavLink
                 to="/login"
