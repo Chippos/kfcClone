@@ -15,7 +15,6 @@ function shop({ shopData, getShopData, addToCart }) {
   const handleCategory = (value) => {
     console.log(value);
   };
-  console.log(shopData)
   
   useEffect(() => {
     getShopData();
@@ -66,7 +65,7 @@ function shop({ shopData, getShopData, addToCart }) {
                   <Typography>{item.description}</Typography>
                 </CardBody>
                 <CardFooter className='pt-0 mt-auto flex items-center justify-between'>
-                  <Button onClick={()=> addToCart(item.category)}>Add to Cart</Button>
+                  <Button onClick={()=> addToCart(item)}>Add to Cart</Button>
                   {`Rs. ${item.price}/-`}
                 </CardFooter>
               </Card>

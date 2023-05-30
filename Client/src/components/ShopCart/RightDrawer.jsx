@@ -5,37 +5,121 @@ import {
   Typography,
   IconButton,
 } from "@material-tailwind/react";
-function RightDrawer({ closeDrawer, open }) {
+import { connect } from "react-redux";
+import { addToCart } from "../../AppStore/actions/shop.activity";
 
+function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
+  const { addedItems, quantity } = cartData;
+  console.log(addedItems)
   return (
     <>
       <Drawer
         placement="right"
         open={open}
         onClose={closeDrawer}
-        className="p-4"
+        className={`p-4 ${
+          open ? "!max-w-md" : ""
+        } overflow-y-auto scrollbar-hidden`}
       >
-        <div className="mb-6 flex items-center justify-between">
-          <Typography variant="h5" color="blue-gray">
-            Material Tailwind
-          </Typography>
-          <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-            <i className="fa-regular fa-x"></i>
-          </IconButton>
-        </div>
-        <Typography color="gray" className="mb-8 pr-4 font-normal">
-          Material Tailwind features multiple React and HTML components, all
-          written with Tailwind CSS classes and Material Design guidelines.
-        </Typography>
-        <div className="flex gap-2">
-          <Button size="sm">Get Started</Button>
-          <Button size="sm" variant="outlined">
-            Documentation
-          </Button>
+        <div className="relative h-full">
+          <div className="mb-6 flex items-center justify-between">
+            <Typography variant="h5" className="text-[#0096d8]">
+              <i className="fa-solid fa-bucket"></i> Your Bucket
+            </Typography>
+            <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
+              <i className="fa-regular fa-x text-sm"></i>
+            </IconButton>
+          </div>
+          <div className="mt-6 h-[84vh] space-y-3">
+            {quantity === 0 ? (
+              <div className="text-center">
+                <i className="fa-solid fa-cart-shopping-fast fa-bounce text-2xl text-[#0096d8]"></i>
+                <Typography variant="h5" color="blue-gray">
+                  You haven’t added any items in bucket yet
+                </Typography>
+              </div>
+            ) : (
+              addedItems?.map((item, index) => (
+                <div
+                  className="bg-gray-100 px-3 py-4 rounded flex justify-between items-start"
+                  key={index}
+                >
+                  <div className="flex justify-start items-center gap-2">
+                    <img
+                      className="max-w-[75px] rounded w-full"
+                      src={item.imageUrl}
+                      alt=""
+                    />
+                    <div className="flex-1 flex-grow flex flex-col justify-between items-start space-y-3">
+                      <Typography variant="h5" color="blue-gray">
+                        {item.title}
+                      </Typography>
+                      <div className="flex justify-start items-center gap-1">
+                        {item.quantity === 1 ? (
+                          <Button
+                            variant="text"
+                            className="px-3 py-2 rounded"
+                            onClick={() => addToCart(item, "ADD_CART_DEL")}
+                          >
+                            <i className="fa-solid fa-trash"></i>
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="text"
+                            className="px-3 py-2 rounded"
+                            onClick={() => addToCart(item, "ADD_CART_DEC")}
+                          >
+                            <i className="fa-regular fa-minus"></i>
+                          </Button>
+                        )}
+                        <span>
+                          <Typography
+                            variant="paragraph"
+                            color="blue-gray"
+                            className="font-medium"
+                          >
+                            {item.quantity}
+                          </Typography>
+                        </span>
+                        <Button
+                          onClick={() => addToCart(item, "ADD_CART_INC")}
+                          variant="text"
+                          className="px-3 py-2 rounded"
+                        >
+                          <i className="fa-regular fa-plus"></i>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <Typography variant="h5" color="blue-gray">
+                      Rs: {item.price * item.quantity}
+                    </Typography>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+          {quantity === 0 ? (
+            ""
+          ) : (
+            <div className="border-t border-gray-100 py-3 px-2 sticky -bottom-4 right-0 w-full bg-white">
+              <Button className="w-full py-3 text-base">CheckOut</Button>
+            </div>
+          )}
         </div>
       </Drawer>
     </>
   );
 }
 
-export default RightDrawer;
+const mapStateToProps = (state) => ({
+  cartData: state.cart,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToCart: (data, type) => dispatch(addToCart(data, type)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(RightDrawer);
