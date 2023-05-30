@@ -10,7 +10,11 @@ import { addToCart } from "../../AppStore/actions/shop.activity";
 
 function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
   const { addedItems, quantity } = cartData;
-  console.log(addedItems)
+
+  const totalPrice = addedItems.reduce((accumulator, item) => {
+    return accumulator + item.price * item.quantity;
+  }, 0);
+  console.log(addedItems);
   return (
     <>
       <Drawer
@@ -24,11 +28,21 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
         <div className="relative h-full">
           <div className="mb-6 flex items-center justify-between">
             <Typography variant="h5" className="text-[#0096d8]">
-              <i className="fa-solid fa-bucket"></i> Your Bucket
+              Your Bucket
             </Typography>
-            <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
-              <i className="fa-regular fa-x text-sm"></i>
-            </IconButton>
+
+            <div className="flex justify-start items-center gap-1">
+              {totalPrice == 0 ? '': <Typography variant="h5" className="text-[#0096d8]">
+                Total: {totalPrice}
+              </Typography>}
+              <IconButton
+                variant="text"
+                color="blue-gray"
+                onClick={closeDrawer}
+              >
+                <i className="fa-regular fa-x text-sm"></i>
+              </IconButton>
+            </div>
           </div>
           <div className="mt-6 h-[84vh] space-y-3">
             {quantity === 0 ? (

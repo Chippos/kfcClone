@@ -10,6 +10,7 @@ const customTheme = {
       base: {
         overlay: {
           position: "fixed",
+          backDrop: 'backdrop-blur-none'
         },
       },
     },

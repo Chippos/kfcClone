@@ -62,7 +62,7 @@ function shop({ shopData, getShopData, addToCart }) {
                   <Typography variant='h5' color='blue-gray' className='mb-2'>
                     {item.title}
                   </Typography>
-                  <Typography>{item.description}</Typography>
+                  <Typography variant="paragraph" className="line-clamp-3">{item.description}</Typography>
                 </CardBody>
                 <CardFooter className='pt-0 mt-auto flex items-center justify-between'>
                   <Button onClick={()=> addToCart(item)}>Add to Cart</Button>
