@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { addToCart } from "../../AppStore/actions/shop.activity";
 
 function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
-  const { addedItems, quantity } = cartData;
+  const { addedItems, quantity, data } = cartData;
 
   const totalPrice = addedItems.reduce((accumulator, item) => {
     return accumulator + item.price * item.quantity;
@@ -23,7 +23,7 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
         onClose={closeDrawer}
         className={`p-4 ${
           open ? "!max-w-md" : ""
-        } overflow-y-auto scrollbar-hidden`}
+        } `}
       >
         <div className="relative h-full">
           <div className="mb-6 flex items-center justify-between">
@@ -44,8 +44,8 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
               </IconButton>
             </div>
           </div>
-          <div className="mt-6 h-[84vh] space-y-3">
-            {quantity === 0 ? (
+          <div className="mt-6 h-[84vh] overflow-y-auto space-y-3 scrollbar-hidden">
+            {addedItems.length == 0 ? (
               <div className="text-center">
                 <i className="fa-solid fa-cart-shopping-fast fa-bounce text-2xl text-[#0096d8]"></i>
                 <Typography variant="h5" color="blue-gray">
@@ -117,7 +117,7 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
           {quantity === 0 ? (
             ""
           ) : (
-            <div className="border-t border-gray-100 py-3 px-2 sticky -bottom-4 right-0 w-full bg-white">
+            <div className="border-t border-gray-200 py-3 px-2 w-full bg-white">
               <Button className="w-full py-3 text-base">CheckOut</Button>
             </div>
           )}

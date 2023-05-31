@@ -5,14 +5,17 @@ import Routing from "./Routes";
 
 // Redux Store
 import { Provider } from "react-redux";
-import store from "./AppStore/store";
+import { store, persistor } from "./AppStore/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router>
-        <Routing />
-      </Router>
+    <Provider store={store} >
+      <PersistGate persistor={persistor}>
+        <Router>
+          <Routing />
+        </Router>
+      </PersistGate>
     </Provider>
   );
 }

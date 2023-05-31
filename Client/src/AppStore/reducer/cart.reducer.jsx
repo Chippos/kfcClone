@@ -5,7 +5,6 @@ const initialState = {
   addedItems: [],
   quantity: 0,
 };
-
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
@@ -20,6 +19,8 @@ export default function (state = initialState, action) {
             quantity: (state.quantity += 1),
           };
         } else if (state.addedItems.length > 0) {
+          console.log(initialState);
+
           //check if the action id exists in the addedItems
           let existed_item = state.addedItems.find(
             (item) => payload._id === item._id

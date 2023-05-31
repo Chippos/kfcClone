@@ -9,12 +9,13 @@ import {
   Badge,
 } from "@material-tailwind/react";
 import { Link, NavLink } from "react-router-dom";
-import { connect } from 'react-redux';
-import { addToCart } from '../../AppStore/actions/shop.activity';
+import { connect } from "react-redux";
+import { addToCart } from "../../AppStore/actions/shop.activity";
 
 function navbar({ openDrawer, cartData }) {
   const [openNav, setOpenNav] = useState(false);
-  const {quantity} = cartData;
+  const { quantity, addedItems } = cartData;
+  console.log(quantity)
 
   useEffect(() => {
     window.addEventListener(
@@ -53,15 +54,18 @@ function navbar({ openDrawer, cartData }) {
                     onClick={openDrawer}
                     className="block py-2 pl-3 pr-4 text-gray-800 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#0096D8] lg:p-0 font-semibold bg-transparent shadow-none text-base capitalize hover:shadow-none !overflow-visible"
                   >
-                    <Badge
-                      content={quantity}
-                      placement="top-end"
-                      overlap="circular"
-                      withBorder
-                      className="top-0 right-0 !min-w-[24px]"
-                    >
-                      Cart
-                    </Badge>
+                    {addedItems.length == 0 ? (
+                      <>Cart</>
+                    ) : (
+                      <Badge
+                        content={quantity}
+                        placement="top-end"
+                        overlap="circular"
+                        className="top-0 right-0 !min-w-[20px] !min-h-[20px] w-[20px] h-[20]"
+                      >
+                        Cart
+                      </Badge>
+                    )}
                   </Button>
                 </Typography>
                 <Typography as="li">
@@ -144,7 +148,6 @@ function navbar({ openDrawer, cartData }) {
                   content={quantity}
                   placement="top-end"
                   overlap="circular"
-                  withBorder
                   className="top-0 right-0 !min-w-[24px]"
                 >
                   Cart

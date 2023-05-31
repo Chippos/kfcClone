@@ -12,9 +12,13 @@ import { useEffect } from 'react';
 
 function shop({ shopData, getShopData, addToCart }) {
 
+  const {addeditems} = shopData
   const handleCategory = (value) => {
     console.log(value);
   };
+  const handleItemAdded = ()=>{
+
+  }
   
   useEffect(() => {
     getShopData();
@@ -65,7 +69,7 @@ function shop({ shopData, getShopData, addToCart }) {
                   <Typography variant="paragraph" className="line-clamp-3">{item.description}</Typography>
                 </CardBody>
                 <CardFooter className='pt-0 mt-auto flex items-center justify-between'>
-                  <Button onClick={()=> addToCart(item)}>Add to Cart</Button>
+                  <Button onClick={()=> addToCart(item)}  className=''>Add to Cart</Button>
                   {`Rs. ${item.price}/-`}
                 </CardFooter>
               </Card>
