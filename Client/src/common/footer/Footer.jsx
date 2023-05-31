@@ -241,11 +241,11 @@ function Footer() {
                     <option >English</option>
                     <option value="US">ECR</option>
                   </select>
-                  <img
+                  {/* <img
                     className="absolute top-[11px] left-[9px] w-5"
                     src="./images/language.png"
                     alt=""
-                  />
+                  /> */}
                 </div>
                 <div className="relative max-w-[210px] w-full">
                   <select
@@ -255,11 +255,11 @@ function Footer() {
                     <option >English</option>
                     <option value="US">ECR</option>
                   </select>
-                  <img
+                  {/* <img
                     className="absolute top-[13px] left-[16px] w-[10px] h-[15px]"
                     src="./images/dollar.png"
                     alt=""
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

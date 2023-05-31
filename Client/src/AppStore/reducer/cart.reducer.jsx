@@ -19,8 +19,6 @@ export default function (state = initialState, action) {
             quantity: (state.quantity += 1),
           };
         } else if (state.addedItems.length > 0) {
-          console.log(initialState);
-
           //check if the action id exists in the addedItems
           let existed_item = state.addedItems.find(
             (item) => payload._id === item._id
@@ -65,7 +63,6 @@ export default function (state = initialState, action) {
         );
         if (existed_item) {
           existed_item.quantity -= 1;
-          console.log({ dec: existed_item });
           return {
             ...state,
           };
@@ -77,7 +74,6 @@ export default function (state = initialState, action) {
         let existed_item = state.addedItems.filter(
           (item) => payload._id !== item._id
         );
-        console.log(existed_item);
         return {
           ...state,
           data: payload,

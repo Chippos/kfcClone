@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { connect } from "react-redux";
 import { addToCart } from "../../AppStore/actions/shop.activity";
+import { NavLink } from "react-router-dom";
 
 function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
   const { addedItems, quantity, data } = cartData;
@@ -14,7 +15,6 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
   const totalPrice = addedItems.reduce((accumulator, item) => {
     return accumulator + item.price * item.quantity;
   }, 0);
-  console.log(addedItems);
   return (
     <>
       <Drawer
@@ -118,7 +118,9 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
             ""
           ) : (
             <div className="border-t border-gray-200 py-3 px-2 w-full bg-white">
-              <Button className="w-full py-3 text-base">CheckOut</Button>
+              <NavLink to='/checkout'>
+                <Button className="w-full py-3 text-base" onClick={closeDrawer}>CheckOut</Button>
+              </NavLink>
             </div>
           )}
         </div>

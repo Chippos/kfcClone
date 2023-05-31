@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import { Home, NotFound, SignUp, Login, Shop, AddProduct } from "../Pages";
+import { Home, NotFound, SignUp, Login, Shop, AddProduct, CheckOut } from "../Pages";
 import { LayoutIndex } from "../layout";
 
 function Routing() {
@@ -10,6 +10,7 @@ function Routing() {
         <Route index element={<Home />} />
         <Route path="shop" element={<Shop />} />
         <Route path="addproduct" element={<AddProduct />} />
+        <Route path="checkout" element={<CheckOut/>}/>
       </Route>
 
       

@@ -3,10 +3,10 @@ import logo from "../../assets/images/site-logo.png";
 import { navLinks } from "../../constants";
 import {
   Navbar,
-  MobileNav,
   Typography,
   Button,
   Badge,
+  Collapse,
 } from "@material-tailwind/react";
 import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,7 +15,6 @@ import { addToCart } from "../../AppStore/actions/shop.activity";
 function navbar({ openDrawer, cartData }) {
   const [openNav, setOpenNav] = useState(false);
   const { quantity, addedItems } = cartData;
-  console.log(quantity)
 
   useEffect(() => {
     window.addEventListener(
@@ -59,8 +58,6 @@ function navbar({ openDrawer, cartData }) {
                     ) : (
                       <Badge
                         content={quantity}
-                        placement="top-end"
-                        overlap="circular"
                         className="top-0 right-0 !min-w-[20px] !min-h-[20px] w-[20px] h-[20]"
                       >
                         Cart
@@ -127,7 +124,7 @@ function navbar({ openDrawer, cartData }) {
             </Button>
           </div>
         </div>
-        <MobileNav open={openNav} className="border border-gray-100 p-1">
+        <Collapse open={openNav} className="">
           <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 navlinks">
             {navLinks.map((nav, index) => (
               <Typography as="li" key={index}>
@@ -144,14 +141,16 @@ function navbar({ openDrawer, cartData }) {
                 onClick={openDrawer}
                 className="block py-2 pl-3 pr-4 text-gray-800 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#0096D8] lg:p-0 font-semibold bg-transparent shadow-none text-base capitalize hover:shadow-none !overflow-visible"
               >
-                <Badge
-                  content={quantity}
-                  placement="top-end"
-                  overlap="circular"
-                  className="top-0 right-0 !min-w-[24px]"
-                >
-                  Cart
-                </Badge>
+                {addedItems.length == 0 ? (
+                  <>Cart</>
+                ) : (
+                  <Badge
+                    content={quantity}
+                    className="top-0 right-0 !min-w-[20px] !min-h-[20px] w-[20px] h-[20]"
+                  >
+                    Cart
+                  </Badge>
+                )}
               </Button>
             </Typography>
             <Typography as="li">
@@ -171,7 +170,7 @@ function navbar({ openDrawer, cartData }) {
               </Link>
             </Typography>
           </ul>
-        </MobileNav>
+        </Collapse>
       </Navbar>
     </>
   );

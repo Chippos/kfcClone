@@ -22,7 +22,7 @@ function Login() {
                   <form className="mt-6 md:mt-12 space-y-6">
                     <div>
                       <label
-                        for="default-input"
+                         htmlFor="default-input"
                         className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                       >
                         Email
@@ -37,7 +37,7 @@ function Login() {
                     <div>
                       <div className="flex justify-between items-center">
                         <label
-                          for="default-input"
+                           htmlFor="default-input"
                           className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                         >
                           Password
@@ -66,7 +66,7 @@ function Login() {
                             className="w-7 h-7 text-[#0096D8] bg-gray-100 rounded border-gray-300 focus:ring-[#0096D8] checked:bg-[#0096D8] dark:focus:ring-[#0096D8] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label
-                            for="default-checkbox-2"
+                             htmlFor="default-checkbox-2"
                             className="ml-2 text-base font-medium text-gray-900 dark:text-gray-300"
                           >
                             Remember me
