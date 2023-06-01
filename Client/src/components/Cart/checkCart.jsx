@@ -78,17 +78,17 @@ function checkCart({ cartData, addToCart }) {
                             <i className="fa-regular fa-plus"></i>
                           </Button>
                         </div>
-                        <div className="flex items-center space-x-4">
-                          <p className="text-sm">
-                            {item.price * item.quantity}
+                        <div className="flex items-center gap-4">
+                          <p className="text-xl font-medium">
+                            Rs: {item.price * item.quantity}
                           </p>
-                          <Button
+                          {item.quantity > 1 ? <Button
                             variant="text"
                             className="px-3 py-2 rounded"
                             onClick={() => addToCart(item, "ADD_CART_DEL")}
                           >
                             <i className="fa-solid fa-trash"></i>
-                          </Button>
+                          </Button> : ''}
                         </div>
                       </div>
                     </div>

@@ -11,7 +11,12 @@ function Login() {
               <div className="w-full h-full max-w-[580px] mx-auto">
                 <div className="mb-16 lg:mb-40">
                   <Link to="/">
-                    <img src={SiteLogo} alt="" />
+                    <div className="flex justify-start items-center gap-2">
+                      <img className="w-24" src={SiteLogo} alt="" />
+                      <p className="text-4xl font-bold text-gray-800">
+                        KF<span className="text-[#0096D8]">C</span>
+                      </p>
+                    </div>
                   </Link>
                 </div>
                 <div className="w-full">
@@ -22,7 +27,7 @@ function Login() {
                   <form className="mt-6 md:mt-12 space-y-6">
                     <div>
                       <label
-                         htmlFor="default-input"
+                        htmlFor="default-input"
                         className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                       >
                         Email
@@ -37,7 +42,7 @@ function Login() {
                     <div>
                       <div className="flex justify-between items-center">
                         <label
-                           htmlFor="default-input"
+                          htmlFor="default-input"
                           className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                         >
                           Password
@@ -66,7 +71,7 @@ function Login() {
                             className="w-7 h-7 text-[#0096D8] bg-gray-100 rounded border-gray-300 focus:ring-[#0096D8] checked:bg-[#0096D8] dark:focus:ring-[#0096D8] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label
-                             htmlFor="default-checkbox-2"
+                            htmlFor="default-checkbox-2"
                             className="ml-2 text-base font-medium text-gray-900 dark:text-gray-300"
                           >
                             Remember me

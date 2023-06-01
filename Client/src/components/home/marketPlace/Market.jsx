@@ -1,7 +1,10 @@
 import React from "react";
 import { marketPlace } from "../../../constants";
+import { connect } from "react-redux";
+// import { addToCart } from "../../AppStore/actions/shop.activity";
 
-function Market() {
+function Market({cartData}) {
+  console.log(cartData)
   return (
     <>
       <section className="my-20 sm:my-40">
@@ -52,5 +55,8 @@ function Market() {
     </>
   );
 }
+const mapStateToProps = (state)=>({
+  cartData : state.cart,
+});
 
-export default Market;
+export default connect(mapStateToProps)(Market);

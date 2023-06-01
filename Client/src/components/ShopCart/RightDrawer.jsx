@@ -21,9 +21,7 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
         placement="right"
         open={open}
         onClose={closeDrawer}
-        className={`p-4 ${
-          open ? "!max-w-md" : ""
-        } `}
+        className={`p-4 ${open ? "!max-w-md" : ""} `}
       >
         <div className="relative h-full">
           <div className="mb-6 flex items-center justify-between">
@@ -32,9 +30,13 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
             </Typography>
 
             <div className="flex justify-start items-center gap-1">
-              {totalPrice == 0 ? '': <Typography variant="h5" className="text-[#0096d8]">
-                Total: {totalPrice}
-              </Typography>}
+              {totalPrice == 0 ? (
+                ""
+              ) : (
+                <Typography variant="h5" className="text-[#0096d8]">
+                  Total: {totalPrice}
+                </Typography>
+              )}
               <IconButton
                 variant="text"
                 color="blue-gray"
@@ -105,10 +107,21 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
                       </div>
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-3 text-end">
                     <Typography variant="h5" color="blue-gray">
                       Rs: {item.price * item.quantity}
                     </Typography>
+                    {item.quantity > 1 ? (
+                      <Button
+                        variant="text"
+                        className="px-3 py-2 rounded"
+                        onClick={() => addToCart(item, "ADD_CART_DEL")}
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </Button>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 </div>
               ))
@@ -118,8 +131,10 @@ function RightDrawer({ closeDrawer, open, cartData, addToCart }) {
             ""
           ) : (
             <div className="border-t border-gray-200 py-3 px-2 w-full bg-white">
-              <NavLink to='/checkout'>
-                <Button className="w-full py-3 text-base" onClick={closeDrawer}>CheckOut</Button>
+              <NavLink to="/checkout">
+                <Button className="w-full py-3 text-base" onClick={closeDrawer}>
+                  CheckOut
+                </Button>
               </NavLink>
             </div>
           )}

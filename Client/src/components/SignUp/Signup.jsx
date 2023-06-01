@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SignupBg, SiteLogo } from "../../assets";
 import { Link } from "react-router-dom";
+import { Button, Typography } from "@material-tailwind/react";
 
 function Signup() {
+  useEffect(() => {
+    let style1 = document.createElement("style");
+    let style2 = document.createElement("style");
+    let after = document.getElementById("after-te1");
+    let before = document.getElementById("before-te1");
+    const setKeyframesRules = (n, start = 0) => {
+      let steps = "";
+      for (let i = start; i <= n; i++) {
+        let percent = (i / n) * 100;
+        let random1 = `${Math.random() * 150}px`;
+        let random2 = `${Math.random() * 150}px`;
+        steps = steps.concat(
+          `${percent}% { clip: rect(${random1}, 9999px, ${random2}, 0) } `
+        );
+      }
+      return steps;
+    };
+    let keyframes1 = `@keyframes glitch-anim-1 { ${setKeyframesRules(24)} }`;
+    let keyframes2 = `@keyframes glitch-anim-2 { ${setKeyframesRules(32, 2)} }`;
+    style1.innerHTML = keyframes1;
+    style2.innerHTML = keyframes2;
+    after.appendChild(style1);
+    before.appendChild(style2);
+    after.style.animation =
+      "glitch-anim-1 2.5s infinite linear alternate-reverse";
+    before.style.animation =
+      "glitch-anim-2 3s infinite linear alternate-reverse";
+  }, []);
   return (
     <>
       <section className="h-screen">
@@ -12,7 +41,12 @@ function Signup() {
               <div className="w-full h-full max-w-[580px] mx-auto">
                 <div className="mb-10 lg:mb-32">
                   <Link to="/">
-                    <img src={SiteLogo} alt="" />
+                    <div className="flex justify-start items-center gap-2">
+                      <img className="w-24" src={SiteLogo} alt="" />
+                      <p className="text-4xl font-bold text-gray-800">
+                        KF<span className="text-[#0096D8]">C</span>
+                      </p>
+                    </div>
                   </Link>
                 </div>
                 <div className="w-full">
@@ -23,22 +57,23 @@ function Signup() {
                   <form className="mt-6 md:mt-12 space-y-6">
                     <div>
                       <label
-                         htmlFor="default-input"
+                        htmlFor="username"
                         className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                       >
                         Username
                       </label>
                       <input
                         type="text"
-                        id="default-input"
-                        className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md focus:ring-[#0096D8] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        id="username"
+                        name="username"
+                        className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                         placeholder="Username"
                       />
                     </div>
                     <div>
                       <div className="flex justify-between items-center">
                         <label
-                           htmlFor="default-input"
+                          htmlFor="email"
                           className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                         >
                           Email
@@ -46,8 +81,9 @@ function Signup() {
                       </div>
                       <input
                         type="text"
-                        id="default-input"
-                        className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md focus:ring-[#0096D8] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        id="email"
+                        name="email"
+                        className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                         placeholder="Email"
                       />
                     </div>
@@ -55,7 +91,7 @@ function Signup() {
                       <div>
                         <div className="flex justify-between items-center">
                           <label
-                             htmlFor="default-input"
+                            htmlFor="password"
                             className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                           >
                             Password
@@ -63,15 +99,16 @@ function Signup() {
                         </div>
                         <input
                           type="password"
-                          id="default-input"
-                          className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md focus:ring-[#0096D8] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          id="password"
+                          name="password"
+                          className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                           placeholder="Password"
                         />
                       </div>
                       <div>
                         <div className="flex justify-between items-center">
                           <label
-                             htmlFor="default-input"
+                            htmlFor="cpassowrd"
                             className="block mb-2 text-base font-medium text-[#263238] dark:text-gray-4"
                           >
                             Confirm Password
@@ -79,36 +116,14 @@ function Signup() {
                         </div>
                         <input
                           type="password"
-                          id="default-input"
-                          className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md focus:ring-[#0096D8] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          id="cpassowrd"
+                          name="cpassowrd"
+                          className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                           placeholder="Confirm Password"
                         />
                       </div>
                     </div>
                     <div>
-                      <div>
-                        <div className="flex items-center">
-                          <input
-                            id="default-checkbox-2"
-                            type="checkbox"
-                            value=""
-                            className="w-7 h-7 text-[#0096D8] bg-gray-100 rounded border-gray-300 focus:ring-[#0096D8] checked:bg-[#0096D8] dark:focus:ring-[#0096D8] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          <label
-                             htmlFor="default-checkbox-2"
-                            className="ml-2 text-base font-medium text-gray-900 dark:text-gray-300"
-                          >
-                            I agree to the
-                            <a href="#" className="underline">
-                              Terms of Service
-                            </a>
-                            and
-                            <a href="#" className="underline">
-                              Privacy Policy.
-                            </a>
-                          </label>
-                        </div>
-                      </div>
                       <div className="mt-12 mb-14">
                         <button
                           className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8]"
@@ -124,16 +139,15 @@ function Signup() {
                         </button>
                       </div>
                       <div className="text-left">
-                        <p className="text-base text-[#6A6A6A] font-medinputium">
+                        <div className="text-base text-[#6A6A6A] font-medinputium flex justify-start items-center gap-2">
                           Already have an account?{" "}
-                          <a
-                            href="./singup-now.html"
-                            className="text-[#0096D8] uppercase font-semibold underline "
-                          >
-                            {" "}
-                            Login Now
-                          </a>{" "}
-                        </p>
+                          <Link to="/login">
+                            <div className="text-[#0096D8] uppercase font-semibold underline ">
+                              {" "}
+                              Login Now
+                            </div>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </form>
@@ -142,40 +156,59 @@ function Signup() {
             </div>
             <div className="w-full h-[60vh] mb-12 md:mb-0 lg:h-full lg:sticky lg:top-0 order-0 lg:order-1">
               <div
-                className="w-full h-full  bg-no-repeat bg-cover relative p-5 sm:p-[36px_48px] bg-center"
-                style={{ backgroundImage: `url(${SignupBg})` }}
+                className="w-full h-full  bg-no-repeat bg-contain relative p-5 sm:p-[36px_48px] bg-bottom bg-[#0096D8]"
+                style={{
+                  backgroundImage: `url(https://www.kfcpakistan.com/assets/images/login.gif)`,
+                  backgroundSize: "50%",
+                }}
               >
                 <div className="py-5">
                   <div className="flex justify-center items-center gap-3">
                     <Link to="/login">
-                      <button className=" text-white text-base w-max uppercase font-semibold px-3">
+                      <Button
+                        variant="text"
+                        className="text-white text-base font-semibold"
+                      >
                         Sign in
-                      </button>
+                      </Button>
                     </Link>
                     <Link to="/signup">
-                      <button className="bg-[#0096D8] rounded p-[17px_40px] text-white text-base w-max uppercase font-semibold border border-[#0096D8]">
+                      <Button
+                        variant="contained"
+                        className="text-[#0096D8] text-base font-semibold bg-white"
+                      >
                         Sign up
-                      </button>
+                      </Button>
                     </Link>
                   </div>
-                </div>
-                <div className="absolute bottom-7 sm:left-14 left-5 right-5 sm:right-14 bg-[rgba(38_50_56_0.24)] backdrop-blur-xl rounded-3xl p-9">
-                  <p className="text-white sm:text-xl font-medium">
-                    “ The company I selected was great! They responded timely to
-                    my request, completed the work product early, always
-                    answered my questions timely. “
-                  </p>
-                  <div className="mt-9 flex justify-between items-center">
-                    <h1 className="text-white font-bold sm:text-2xl">
-                      Jonh martin
+                  <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3">
+                    <h1 className="text-white text-7xl font-bold uppercase relative inline-block">
+                      <span
+                        id="before-te1"
+                        className="absolute top-0 left-0.5 w-full h-full bg-transparent"
+                        style={{
+                          textShadow: "-2px 0 #49FC00",
+                          clipPath: "rect(24px, 550px, 90px, 0)",
+                        }}
+                        aria-hidden="true"
+                      >
+                        Welcome
+                      </span>{" "}
+                      {/* glitch::before */}
+                      Welcome
+                      <span
+                        id="after-te1"
+                        className="absolute top-0 -left-0.5 w-full h-full bg-transparent"
+                        style={{
+                          textShadow: "-2px 0 spin(#49FC00, 180)",
+                          clipPath: "rect(85px, 550px, 140px, 0)",
+                        }}
+                        aria-hidden="true"
+                      >
+                        Welcome
+                      </span>{" "}
+                      {/* glitch::after */}
                     </h1>
-                    <div className="flex justify-start items-center gap-1 text-white sm:text-2xl">
-                      <i className="fa fa-star" aria-hidden="true"></i>
-                      <i className="fa fa-star" aria-hidden="true"></i>
-                      <i className="fa fa-star" aria-hidden="true"></i>
-                      <i className="fa fa-star" aria-hidden="true"></i>
-                      <i className="fa fa-star" aria-hidden="true"></i>
-                    </div>
                   </div>
                 </div>
               </div>
