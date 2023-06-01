@@ -5,23 +5,55 @@ import {
   CardFooter,
   Typography,
   Button,
+  Spinner,
 } from '@material-tailwind/react';
 import { connect } from 'react-redux';
 import { getShopData, addToCart } from '../AppStore/actions/shop.activity';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-function shop({ shopData, getShopData, addToCart }) {
+function shop({ shopData, addToCart }) {
+  const [hideCartBtn, setHideCartBtn] = useState(-1);
+  const [timer, setTimer] = useState(null);
 
-  const {addeditems} = shopData
-  const handleCategory = (value) => {
-    console.log(value);
+  const [products, setProducts] = useState([]);
+
+  const [flag, setFlag] = useState(false);
+
+  const [filterProducts, setFilterProducts] = useState([]);
+  
+  const {data: {productsData, categoriesData}} = shopData
+
+  // set Products on Button Click
+  const handleCategory = (value) => { 
+    let filterItem = products.filter((item)=> item.category ===  value);
+    setFilterProducts(filterItem)
   };
-  const handleItemAdded = ()=>{
-  }
+
   
   useEffect(() => {
-    getShopData();
+    setProducts([...productsData])
   }, []);
+
+  useEffect(()=> {
+    if(products.length === 0 && flag) return;
+    handleCategory(categoriesData[0]._id)
+    setFlag(true);
+  }, [products]);
+
+  useEffect(()=> {
+    const id = setTimeout(() => {
+      setHideCartBtn(-1);
+    }, 2000);
+    setTimer(id);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [hideCartBtn]);
+
+  // const handleCart = ((item) => {
+  //   addToCart(item);
+  //   setHideCartBtn(true)
+  // })
 
   return (
     <>
@@ -43,7 +75,7 @@ function shop({ shopData, getShopData, addToCart }) {
       <div className='container mx-auto my-4 px-4'>
         <div className='flex justify-center items-center gap-6'>
           {shopData?.data?.categoriesData?.map((item) => (
-            <Button key={item._id} onClick={()=> handleCategory(item.title)}>{item.title}</Button>
+            <Button key={item._id} onClick={()=> handleCategory(item._id)}>{item.title}</Button>
           ))}
         </div>
       </div>
@@ -51,7 +83,7 @@ function shop({ shopData, getShopData, addToCart }) {
       <div className='container mx-auto py-8 px-4'>
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
           {!shopData.isLoading && shopData.data ? (
-            shopData?.data?.productsData?.map((item) => (
+            filterProducts?.map((item) => (
               <Card key={item._id} className='mt-6 '>
                 <CardHeader color='blue-gray' className='relative h-56'>
                   <img
@@ -68,7 +100,7 @@ function shop({ shopData, getShopData, addToCart }) {
                   <Typography variant="paragraph" className="line-clamp-3">{item.description}</Typography>
                 </CardBody>
                 <CardFooter className='pt-0 mt-auto flex items-center justify-between'>
-                  <Button onClick={()=> addToCart(item)}  className=''>Add to Cart</Button>
+                  <Button onClick={() => {addToCart(item); setHideCartBtn(item._id)}} className='flex justify-start items-center gap-1' disabled={hideCartBtn === item._id ? true : false}>{`${hideCartBtn === item._id ?  'Added' : 'Add to Cart'}`} {hideCartBtn === item._id ? <Spinner className='h-4 w-4'/> : ''}</Button>
                   {`Rs. ${item.price}/-`}
                 </CardFooter>
               </Card>
