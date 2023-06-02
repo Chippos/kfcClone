@@ -62,6 +62,28 @@ app.post("/api/signup", async (req, res) => {
       console.log(e)
     }
 });
+app.get("/api/login", async (req, res) => {
+  const { username, email, password, cpassowrd } = req.body;
+  const data= {
+    username: username,
+    email: email,
+    password: password,
+    cpassowrd: cpassowrd,
+  }
+
+  try{
+    const check = await user.findOne({email: email})
+    if(check){
+      res.json("existed")
+    }else{
+      res.json("notExisted")
+      await user.insertMany([data])
+      res.send("notExisted")
+    }
+  }catch(e){
+    console.log(e)
+  }
+});
 
 app.listen(port, () => {
   console.log("Server Started Successfully ");

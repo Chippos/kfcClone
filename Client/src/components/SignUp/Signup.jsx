@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { SignupBg, SiteLogo } from "../../assets";
-import { Link, useNavigate } from "react-router-dom";
-import { Button, Typography } from "@material-tailwind/react";
+import { Link, NavLink } from "react-router-dom";
+import { Button, Typography, Alert } from "@material-tailwind/react";
 
 function Signup() {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -15,6 +13,9 @@ function Signup() {
   });
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [alertShow, setAlertShow] = useState(false);
+  const [existed, setExisted] = useState(false);
 
   const handleUser = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -24,7 +25,6 @@ function Signup() {
     e.preventDefault();
     setFormErrors(validate(user));
     setIsSubmit(true);
-    console.log(formErrors);
   };
 
   const validate = (value) => {
@@ -39,10 +39,11 @@ function Signup() {
           Required
         </>
       );
-    }else if (!regexUser.test(value.username)){
+    } else if (!regexUser.test(value.username)) {
       errors.username = (
         <>
-          <i className="fa-solid fa-circle-exclamation mr-1"></i> Username must be contained Aplhabets & atleast 3 Numbers e.g: abcd123 
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Username must
+          be contained Aplhabets & atleast 3 Numbers e.g: abcd123
         </>
       );
     }
@@ -61,11 +62,26 @@ function Signup() {
         </>
       );
     }
+    let matchPassword = value.password === value.cpassowrd;
     if (!value.password) {
       errors.password = (
         <>
           <i className="fa-solid fa-circle-exclamation mr-1"></i> Password is
           Required
+        </>
+      );
+    } else if (!matchPassword) {
+      errors.password = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Password Not
+          Match
+        </>
+      );
+    } else if (value.password.length < 4) {
+      errors.password = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Password Must
+          contain atlest 4 Chracters
         </>
       );
     }
@@ -74,6 +90,13 @@ function Signup() {
         <>
           <i className="fa-solid fa-circle-exclamation mr-1"></i> Confirm
           Password is Required
+        </>
+      );
+    } else if (!matchPassword) {
+      errors.cpassword = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Enter Same
+          Password
         </>
       );
     }
@@ -100,10 +123,10 @@ function Signup() {
       )
       .then((res) => {
         if (res.data == "existed") {
-          alert("User Already Exist");
-          navigate("/login");
+          setExisted(true);
+          setAlertShow(true);
         } else if (res.data == "notExisted") {
-          alert("Successfully Signed Up");
+          setAlertShow(true);
         }
       })
       .catch((e) => {
@@ -113,7 +136,6 @@ function Signup() {
   };
 
   useEffect(() => {
-    console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       registerUser();
     }
@@ -150,9 +172,44 @@ function Signup() {
   }, []);
   return (
     <>
-      <section className="h-screen">
+      <section className="h-screen relative">
         <div className="h-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 h-full text-gray-800 w-full">
+            {alertShow === true ? (
+              <Alert
+                open={open}
+                color={existed === true ? "blue" : "green"}
+                onClose={() => setOpen(false)}
+                animate={{
+                  mount: { y: 0 },
+                  unmount: { y: 100 },
+                }}
+                className="fixed top-10 z-10 left-5 max-w-md w-full "
+              >
+                <div className="flex justify-start items-center gap-1">
+                {existed === true
+                  ? "User Already Exist"
+                  : "Successfully Signup Redirecting to Login!"}
+                {existed === true ? (
+                  <NavLink to="/login">
+                    <Button
+                    variant="text"
+                    color="white"
+                    size="sm"
+                    className="text-base font-normal px-2 py-1 capitalize "
+                    
+                  >
+                    Go to login Page
+                  </Button>
+                  </NavLink>
+                ) : (
+                  ""
+                )}
+                </div>
+              </Alert>
+            ) : (
+              ""
+            )}
             <div className="w-full h-full  px-4 py-5 sm:px-[100px] lg:my-0 order-1 lg:order-0">
               <div className="w-full h-full max-w-[580px] mx-auto">
                 <div className="mb-10 lg:mb-32">
