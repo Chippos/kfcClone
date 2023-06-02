@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Typography } from "@material-tailwind/react";
 
 function Signup() {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
 
   const [user, setUser] = useState({
     username: "",
@@ -13,19 +13,76 @@ function Signup() {
     password: "",
     cpassowrd: "",
   });
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
 
-  let name, value;
   const handleUser = (e) => {
-    name = e.target.name;
-    value = e.target.value;
-    setUser({ ...user, [name]: value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const registerUser = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setFormErrors(validate(user));
+    setIsSubmit(true);
+    console.log(formErrors);
+  };
+
+  const validate = (value) => {
+    const errors = {};
+    const regexUser = /^[A-Za-z]+(?:\d{1,3})?$/;
+    const regexEmail =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!value.username) {
+      errors.username = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Username is
+          Required
+        </>
+      );
+    }else if (!regexUser.test(value.username)){
+      errors.username = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Username must be contained Aplhabets & atleast 3 Numbers e.g: abcd123 
+        </>
+      );
+    }
+    if (!value.email) {
+      errors.email = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Email is
+          Required
+        </>
+      );
+    } else if (!regexEmail.test(value.email)) {
+      errors.email = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> This is not a
+          valid Email
+        </>
+      );
+    }
+    if (!value.password) {
+      errors.password = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Password is
+          Required
+        </>
+      );
+    }
+    if (!value.cpassowrd) {
+      errors.cpassowrd = (
+        <>
+          <i className="fa-solid fa-circle-exclamation mr-1"></i> Confirm
+          Password is Required
+        </>
+      );
+    }
+    return errors;
+  };
+
+  const registerUser = async () => {
     const { username, email, password, cpassowrd } = user;
 
-    console.log(user);
     const res = await axios
       .post(
         "api/signup",
@@ -54,6 +111,13 @@ function Signup() {
         console.log(e);
       });
   };
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      registerUser();
+    }
+  }, [formErrors]);
 
   // Text Animations
   useEffect(() => {
@@ -106,7 +170,10 @@ function Signup() {
                   <p className="text-[#6A6A6A] text-base font-medium">
                     Register here for a new account.
                   </p>
-                  <form method="POST" className="mt-6 md:mt-12 space-y-6">
+                  <form
+                    className="mt-6 md:mt-12 space-y-6"
+                    onSubmit={handleSubmit}
+                  >
                     <div>
                       <label
                         htmlFor="username"
@@ -120,10 +187,16 @@ function Signup() {
                         name="username"
                         className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                         onChange={handleUser}
-                        required={true}
                         placeholder="Username"
                         value={user.name}
                       />
+                      <p
+                        className={`text-sm text-red-600 font-medium mt-1 ${
+                          formErrors.username ? "shake" : ""
+                        }`}
+                      >
+                        {formErrors.username}
+                      </p>
                     </div>
                     <div>
                       <div className="flex justify-between items-center">
@@ -140,10 +213,16 @@ function Signup() {
                         name="email"
                         className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                         onChange={handleUser}
-                        required={true}
                         placeholder="Email"
                         value={user.email}
                       />
+                      <p
+                        className={`text-sm text-red-600 font-medium mt-1 ${
+                          formErrors.email ? "shake" : " "
+                        }`}
+                      >
+                        {formErrors.email}
+                      </p>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-6">
                       <div>
@@ -161,10 +240,16 @@ function Signup() {
                           name="password"
                           className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                           onChange={handleUser}
-                          required={true}
                           placeholder="Password"
                           value={user.password}
                         />
+                        <p
+                          className={`text-sm text-red-600 font-medium mt-1 ${
+                            formErrors.password ? "shake" : ""
+                          }`}
+                        >
+                          {formErrors.password}
+                        </p>
                       </div>
                       <div>
                         <div className="flex justify-between items-center">
@@ -181,18 +266,24 @@ function Signup() {
                           name="cpassowrd"
                           className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                           onChange={handleUser}
-                          required={true}
                           placeholder="Confirm Password"
                           value={user.cpassowrd}
                         />
+                        <p
+                          className={`text-sm text-red-600 font-medium mt-1 ${
+                            formErrors.cpassowrd ? "shake" : ""
+                          }`}
+                        >
+                          {formErrors.cpassowrd}
+                        </p>
                       </div>
                     </div>
                     <div>
                       <div className="mt-12 mb-14">
                         <Button
-                          onClick={registerUser}
-                          color="white"
+                          // onClick={registerUser}
                           type="submit"
+                          color="white"
                           className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8]"
                         >
                           SIGN up NOW
