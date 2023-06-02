@@ -1,9 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { SignupBg, SiteLogo } from "../../assets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Typography } from "@material-tailwind/react";
 
 function Signup() {
+  const navigate = useNavigate;
+
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    cpassowrd: "",
+  });
+
+  let name, value;
+  const handleUser = (e) => {
+    name = e.target.name;
+    value = e.target.value;
+    setUser({ ...user, [name]: value });
+  };
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    const { username, email, password, cpassowrd } = user;
+
+    console.log(user);
+    const res = await axios
+      .post(
+        "api/signup",
+        {
+          username,
+          email,
+          password,
+          cpassowrd,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data == "existed") {
+          alert("User Already Exist");
+          navigate("/login");
+        } else if (res.data == "notExisted") {
+          alert("Successfully Signed Up");
+        }
+      })
+      .catch((e) => {
+        alert("Wrong Detail");
+        console.log(e);
+      });
+  };
+
+  // Text Animations
   useEffect(() => {
     let style1 = document.createElement("style");
     let style2 = document.createElement("style");
@@ -54,7 +106,7 @@ function Signup() {
                   <p className="text-[#6A6A6A] text-base font-medium">
                     Register here for a new account.
                   </p>
-                  <form className="mt-6 md:mt-12 space-y-6">
+                  <form method="POST" className="mt-6 md:mt-12 space-y-6">
                     <div>
                       <label
                         htmlFor="username"
@@ -67,7 +119,10 @@ function Signup() {
                         id="username"
                         name="username"
                         className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                        onChange={handleUser}
+                        required={true}
                         placeholder="Username"
+                        value={user.name}
                       />
                     </div>
                     <div>
@@ -84,7 +139,10 @@ function Signup() {
                         id="email"
                         name="email"
                         className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                        onChange={handleUser}
+                        required={true}
                         placeholder="Email"
+                        value={user.email}
                       />
                     </div>
                     <div className="grid sm:grid-cols-2 gap-6">
@@ -102,7 +160,10 @@ function Signup() {
                           id="password"
                           name="password"
                           className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                          onChange={handleUser}
+                          required={true}
                           placeholder="Password"
+                          value={user.password}
                         />
                       </div>
                       <div>
@@ -119,24 +180,27 @@ function Signup() {
                           id="cpassowrd"
                           name="cpassowrd"
                           className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                          onChange={handleUser}
+                          required={true}
                           placeholder="Confirm Password"
+                          value={user.cpassowrd}
                         />
                       </div>
                     </div>
                     <div>
                       <div className="mt-12 mb-14">
-                        <button
+                        <Button
+                          onClick={registerUser}
+                          color="white"
+                          type="submit"
                           className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8]"
-                          style={{
-                            boxShadow: "0px 18px 20px rgba(0, 150, 216, 0.1)",
-                          }}
                         >
                           SIGN up NOW
                           <i
                             className="fa fa-long-arrow-right ml-5"
                             aria-hidden="true"
                           ></i>
-                        </button>
+                        </Button>
                       </div>
                       <div className="text-left">
                         <div className="text-base text-[#6A6A6A] font-medinputium flex justify-start items-center gap-2">
@@ -174,7 +238,8 @@ function Signup() {
                     </Link>
                     <Link to="/signup">
                       <Button
-                        variant="contained"
+                        variant="filled"
+                        color="white"
                         className="text-[#0096D8] text-base font-semibold bg-white"
                       >
                         Sign up
