@@ -8,7 +8,7 @@ import {
   Spinner,
 } from '@material-tailwind/react';
 import { connect } from 'react-redux';
-import { getShopData, addToCart } from '../AppStore/actions/shop.activity';
+import { addToCart } from '../AppStore/actions/shop.activity';
 import { useEffect, useState } from 'react';
 
 function shop({ shopData, addToCart }) {
@@ -120,7 +120,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getShopData: data => dispatch(getShopData(data)),
     addToCart:  data => dispatch(addToCart(data))
   };
 };

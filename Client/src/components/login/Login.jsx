@@ -1,10 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { LoginBg, SiteLogo } from "../../assets";
-import { Link } from "react-router-dom";
-function Login() {
+import { Link, NavLink } from "react-router-dom";
+import { userLogin } from "../../AppStore/actions/loginAuth";
+import { connect } from "react-redux";
+import { Button, Spinner, Alert } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+
+function Login({ userLogin, userData }) {
+  const Navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data) => {
+    const { email, password } = data;
+    setIsLoading(true);
+
+    const formData = {
+      email: email,
+      password: password,
+      isLoading: true,
+      route: "api/login",
+    };
+
+    userLogin(formData);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (userData?.data?.error) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+    if (userData.isLogedIn) {
+      Navigate("/");
+    }
+  }, [userData]);
+
+  console.log(userData);
   return (
     <>
-      <section className="h-screen">
+      <section className="h-screen relative">
+        <Alert
+          open={open}
+          color="red"
+          className="max-w-lg absolute left-2/4 -translate-x-2/4 z-10 !transform top-5"
+          onClose={() => setOpen(false)}
+          animate={{
+            mount: { y: 0 },
+            unmount: { y: 100 },
+          }}
+        >
+          {userData?.data?.error}
+        </Alert>
+
         <div className="h-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 h-full text-gray-800 w-full">
             <div className="w-full h-full  px-4 py-5 sm:px-[100px] lg:my-0 order-1 lg:order-0">
@@ -24,7 +85,10 @@ function Login() {
                   <p className="text-[#6A6A6A] text-base font-medium">
                     Login if you have an account in here.
                   </p>
-                  <form className="mt-6 md:mt-12 space-y-6">
+                  <form
+                    className="mt-6 md:mt-12 space-y-6"
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
                     <div>
                       <label
                         htmlFor="default-input"
@@ -32,11 +96,35 @@ function Login() {
                       >
                         Email
                       </label>
-                      <input
-                        type="text"
-                        id="default-input"
-                        className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
-                        placeholder="Email Address"
+                      <Controller
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange, onBlur } }) => (
+                          <>
+                            <input
+                              name="email"
+                              onChange={onChange}
+                              value={value}
+                              onBlur={onBlur}
+                              type="text"
+                              id="email"
+                              pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+                              className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                              placeholder="Email Address"
+                            />
+                            {errors && errors.email ? (
+                              <p className="mt-2 text-red-600 shake">
+                                <>
+                                  <i className="fa-solid fa-circle-exclamation mr-1"></i>{" "}
+                                  Email is required
+                                </>
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </>
+                        )}
+                        name="email"
                       />
                     </div>
                     <div>
@@ -54,54 +142,75 @@ function Login() {
                           Forgot your password?
                         </a>
                       </div>
-                      <input
-                        type="text"
-                        id="default-input"
-                        className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
-                        placeholder="Password"
+                      <Controller
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field: { value, onChange, onBlur } }) => (
+                          <>
+                            <input
+                              name="password"
+                              onChange={onChange}
+                              value={value}
+                              onBlur={onBlur}
+                              type="text"
+                              id="password"
+                              className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                              placeholder="*****"
+                            />
+                            {errors && errors.password ? (
+                              <p className="mt-2 text-red-600 shake">
+                                <>
+                                  <i className="fa-solid fa-circle-exclamation mr-1"></i>{" "}
+                                  Password is required
+                                </>
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </>
+                        )}
+                        name="password"
                       />
                     </div>
                     <div>
-                      <div>
-                        <div className="flex items-center">
-                          <input
-                            id="default-checkbox-2"
-                            type="checkbox"
-                            value=""
-                            className="w-7 h-7 text-[#0096D8] bg-gray-100 rounded border-gray-300 focus:ring-[#0096D8] checked:bg-[#0096D8] dark:focus:ring-[#0096D8] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          <label
-                            htmlFor="default-checkbox-2"
-                            className="ml-2 text-base font-medium text-gray-900 dark:text-gray-300"
-                          >
-                            Remember me
-                          </label>
-                        </div>
-                      </div>
                       <div className="mt-12 mb-14">
-                        <button
-                          className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8]"
-                          style={{
-                            boxShadow: "0px 18px 20px rgba(0, 150, 216, 0.1)",
-                          }}
-                        >
-                          Sign IN Now{" "}
-                          <i
-                            className="fa fa-long-arrow-right ml-5"
-                            aria-hidden="true"
-                          ></i>
-                        </button>
+                        {userData?.isLoading ? (
+                          <Button
+                            disabled={true}
+                            type="submit"
+                            className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8]"
+                            style={{
+                              boxShadow: "0px 18px 20px rgba(0, 150, 216, 0.1)",
+                            }}
+                          >
+                            <Spinner />
+                          </Button>
+                        ) : (
+                          <Button
+                            color={"white"}
+                            type="submit"
+                            className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8]"
+                            style={{
+                              boxShadow: "0px 18px 20px rgba(0, 150, 216, 0.1)",
+                            }}
+                          >
+                            Sign IN Now{" "}
+                            <i
+                              className="fa fa-long-arrow-right ml-5"
+                              aria-hidden="true"
+                            ></i>
+                          </Button>
+                        )}
                       </div>
                       <div className="text-left">
                         <p className="text-base text-[#6A6A6A] font-medium">
                           Don’t have an account?{" "}
-                          <a
-                            href="./singup-now.html"
-                            className="text-[#0096D8] uppercase font-semibold underline "
-                          >
-                            {" "}
-                            Sign up Now
-                          </a>{" "}
+                          <NavLink to="/signup">
+                            <span className="text-[#0096D8] uppercase font-semibold underline ">
+                              {" "}
+                              Sign up Now
+                            </span>{" "}
+                          </NavLink>
                         </p>
                       </div>
                     </div>
@@ -156,4 +265,8 @@ function Login() {
   );
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  userData: state.login,
+});
+
+export default connect(mapStateToProps, { userLogin })(Login);

@@ -18,7 +18,7 @@ function Market({ cartData }) {
         <div className="container 2xl:max-w-screen-2xl mx-auto px-4 h-full">
           <div data-aos="fade-up">
             <h1 className="text-4xl sm:text-5xl sm:leading-[70px] font-semibold text-[#263238]">
-              Explore The <span className="text-[#0096D8]"> Marketplace</span>
+              Explore The <span className="text-[#0096D8]"> Categories</span>
             </h1>
           </div>
           <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-9 mt-[4.438rem]">

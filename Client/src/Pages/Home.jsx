@@ -8,7 +8,7 @@ function Home() {
   return (
     <>
       <HeroSection/>
-      <Card/>
+      {/* <Card/> */}
       <Market/>
       <Talent/>
       <Guides/>

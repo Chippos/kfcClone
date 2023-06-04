@@ -1,5 +1,11 @@
 import axios from "axios";
-import { SHOP_DATA, SHOP_DATA_ERROR, ADD_TO_CART, ADD_CART_INC, ADD_CART_DEC } from "../constants";
+import { SHOP_DATA, SHOP_DATA_ERROR} from "../constants";
+
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
 
 export const getShopData = () => async (dispatch) => {
   try {

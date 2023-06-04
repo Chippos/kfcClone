@@ -6,13 +6,12 @@ const category = require("./models/categories");
 const product = require("./models/products");
 const user = require("./models/signup");
 
-
 const app = express();
 // middleware
 app.use(express.json());
 app.use(cors());
 app.use(morgan("tiny"));
-app.options('*', cors());
+app.options("*", cors());
 
 // DataBase & Port initializaton
 const port = 5000;
@@ -36,52 +35,61 @@ app.get("/api/shop", async (req, res) => {
     };
     res.json(combinedData);
   } catch (error) {
-    res.status(200).send(error);
+    res.send(error);
   }
 });
 
 app.post("/api/signup", async (req, res) => {
-    const { username, email, password, cpassowrd } = req.body;
-    const data= {
-      username: username,
-      email: email,
-      password: password,
-      cpassowrd: cpassowrd,
-    }
-
-    try{
-      const check = await user.findOne({email: email})
-      if(check){
-        res.json("existed")
-      }else{
-        res.json("notExisted")
-        await user.insertMany([data])
-        res.send("notExisted")
-      }
-    }catch(e){
-      console.log(e)
-    }
-});
-app.get("/api/login", async (req, res) => {
   const { username, email, password, cpassowrd } = req.body;
-  const data= {
+  const data = {
     username: username,
     email: email,
     password: password,
     cpassowrd: cpassowrd,
-  }
+  };
 
-  try{
-    const check = await user.findOne({email: email})
-    if(check){
-      res.json("existed")
-    }else{
-      res.json("notExisted")
-      await user.insertMany([data])
-      res.send("notExisted")
+  try {
+    const check = await user.findOne({ email: email });
+    if (check) {
+      res.send("existed");
+    } else {
+      res.json("notExisted");
+      await user.insertMany([data]);
+      res.send("notExisted");
     }
-  }catch(e){
-    console.log(e)
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+  const providePassword = password;
+
+  try {
+    const emailCheck = await user.find({ email });
+    let error = "Please provide a valid email address and password.";
+    if (emailCheck.length > 0) {
+      // const {email , password} = check;
+      const [{ cpassowrd, email, password, username, _id }] = emailCheck;
+      const data = {
+        id: _id,
+        email: email,
+        password: password,
+        cpassowrd: cpassowrd,
+        username: username,
+      };
+      const passwordMatch = password === providePassword;
+      if (passwordMatch) {
+        res.json(data);
+      } else {
+        res.send({ error });
+      }
+    } else {
+      res.send({ error });
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 

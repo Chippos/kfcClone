@@ -16,9 +16,14 @@ function Signup() {
   const [open, setOpen] = useState(true);
   const [alertShow, setAlertShow] = useState(false);
   const [existed, setExisted] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleUser = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = (e) => {
@@ -175,10 +180,10 @@ function Signup() {
       <section className="h-screen relative">
         <div className="h-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 h-full text-gray-800 w-full">
-            {alertShow === true ? (
+            {alertShow ? (
               <Alert
                 open={open}
-                color={existed === true ? "blue" : "green"}
+                color={existed ? "blue" : "green"}
                 onClose={() => setOpen(false)}
                 animate={{
                   mount: { y: 0 },
@@ -187,24 +192,23 @@ function Signup() {
                 className="fixed top-10 z-10 left-5 max-w-md w-full "
               >
                 <div className="flex justify-start items-center gap-1">
-                {existed === true
-                  ? "User Already Exist"
-                  : "Successfully Signup Redirecting to Login!"}
-                {existed === true ? (
-                  <NavLink to="/login">
-                    <Button
-                    variant="text"
-                    color="white"
-                    size="sm"
-                    className="text-base font-normal px-2 py-1 capitalize "
-                    
-                  >
-                    Go to login Page
-                  </Button>
-                  </NavLink>
-                ) : (
-                  ""
-                )}
+                  {existed
+                    ? "User Already Exist"
+                    : "Successfully Signup Redirecting to Login!"}
+                  {existed ? (
+                    <NavLink to="/login">
+                      <Button
+                        variant="text"
+                        color="white"
+                        size="sm"
+                        className="text-base font-normal px-2 py-1 capitalize "
+                      >
+                        Go to login Page
+                      </Button>
+                    </NavLink>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </Alert>
             ) : (
@@ -291,15 +295,31 @@ function Signup() {
                             Password
                           </label>
                         </div>
-                        <input
-                          type="password"
-                          id="password"
-                          name="password"
-                          className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
-                          onChange={handleUser}
-                          placeholder="Password"
-                          value={user.password}
-                        />
+                        <div className="relative">
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            id="password"
+                            name="password"
+                            className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                            onChange={handleUser}
+                            placeholder="Password"
+                            value={user.password}
+                          />
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                            <Button
+                              variant="text"
+                              onClick={toggleShowPassword}
+                              className="p-2 text-gray-400 hover:text-gray-500"
+                            >
+                              {" "}
+                              <i
+                                className={`fa-regular ${
+                                  showPassword ? "fa-eye-slash" : "fa-eye "
+                                } `}
+                              ></i>
+                            </Button>
+                          </div>
+                        </div>
                         <p
                           className={`text-sm text-red-600 font-medium mt-1 ${
                             formErrors.password ? "shake" : ""
@@ -317,15 +337,31 @@ function Signup() {
                             Confirm Password
                           </label>
                         </div>
-                        <input
-                          type="password"
-                          id="cpassowrd"
-                          name="cpassowrd"
-                          className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
-                          onChange={handleUser}
-                          placeholder="Confirm Password"
-                          value={user.cpassowrd}
-                        />
+                        <div className="relative">
+                          <input
+                            type={showPassword ? "text" : "password"}
+                            id="cpassowrd"
+                            name="cpassowrd"
+                            className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                            onChange={handleUser}
+                            placeholder="Confirm Password"
+                            value={user.cpassowrd}
+                          />
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                            <Button
+                              variant="text"
+                              onClick={toggleShowPassword}
+                              className="p-2 text-gray-400 hover:text-gray-500"
+                            >
+                              {" "}
+                              <i
+                                className={`fa-regular ${
+                                  showPassword ? "fa-eye-slash" : "fa-eye "
+                                } `}
+                              ></i>
+                            </Button>
+                          </div>
+                        </div>
                         <p
                           className={`text-sm text-red-600 font-medium mt-1 ${
                             formErrors.cpassowrd ? "shake" : ""
