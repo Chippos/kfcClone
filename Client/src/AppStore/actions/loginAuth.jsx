@@ -22,3 +22,11 @@ export const userLogin = (formData) => async (dispatch) => {
     });
   }
 };
+
+export const getUser = (data, type = 'LOGOUT')=>{
+  return{
+    type: type,
+    payload: data,
+  }
+}
+

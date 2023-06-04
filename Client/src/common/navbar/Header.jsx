@@ -10,11 +10,15 @@ import {
 } from "@material-tailwind/react";
 import { Link, NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { addToCart } from "../../AppStore/actions/shop.activity";
+import { userLogin } from "../../AppStore/actions/loginAuth";
+import UserDropdown from "../UserLoggedIn/UserDropdown";
 
-function navbar({ openDrawer, cartData }) {
+function navbar({ openDrawer, cartData, userData }) {
   const [openNav, setOpenNav] = useState(false);
   const { quantity, addedItems } = cartData;
+
+  const { data } = userData;
+  console.log(data);
 
   useEffect(() => {
     window.addEventListener(
@@ -65,26 +69,35 @@ function navbar({ openDrawer, cartData }) {
                     )}
                   </Button>
                 </Typography>
-                <Typography as="li">
-                  <NavLink
-                    to="/login"
-                    className="block py-2 pl-3 pr-4 text-gray-800 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#0096D8] lg:p-0 font-semibold"
-                  >
-                    Sign in
-                  </NavLink>
-                </Typography>
+                {data?.username ? (
+                  ""
+                ) : (
+                  <Typography as="li">
+                    <NavLink
+                      to="/login"
+                      className="block py-2 pl-3 pr-4 text-gray-800 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#0096D8] lg:p-0 font-semibold"
+                    >
+                      Sign in
+                    </NavLink>
+                  </Typography>
+                )}
               </ul>
             </div>
-            <Link to="/signup">
-              <Button
-                as="a"
-                variant="gradient"
-                className="hidden lg:inline-block text-white bg-[#0096D8] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-base px-10 py-4 text-center mr-3 lg:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                style={{ boxShadow: "0px 18px 20px rgba(0, 150, 216, 0.1)" }}
-              >
-                <span>Sign Up</span>
-              </Button>
-            </Link>
+            {data?.username ? (
+              ""
+            ) : (
+              <Link to="/signup">
+                <Button
+                  as="a"
+                  variant="gradient"
+                  className="hidden lg:inline-block text-white bg-[#0096D8] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-base px-10 py-4 text-center mr-3 lg:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  style={{ boxShadow: "0px 18px 20px rgba(0, 150, 216, 0.1)" }}
+                >
+                  <span>Sign Up</span>
+                </Button>
+              </Link>
+            )}
+             {data?.username ? <UserDropdown data={data} /> : ''}
             <Button
               variant="text"
               className="text-white bg-[#0096D8] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-base  text-center lg:hidden px-2 py-2"
@@ -178,5 +191,6 @@ function navbar({ openDrawer, cartData }) {
 
 const mapStateToProps = (state) => ({
   cartData: state.cart,
+  userData: state.login,
 });
-export default connect(mapStateToProps)(navbar);
+export default connect(mapStateToProps, { userLogin })(navbar);

@@ -11,7 +11,11 @@ function Login({ userLogin, userData }) {
   const Navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
   const {
     control,
     handleSubmit,
@@ -108,7 +112,6 @@ function Login({ userLogin, userData }) {
                               onBlur={onBlur}
                               type="text"
                               id="email"
-                              pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
                               className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                               placeholder="Email Address"
                             />
@@ -147,16 +150,32 @@ function Login({ userLogin, userData }) {
                         rules={{ required: true }}
                         render={({ field: { value, onChange, onBlur } }) => (
                           <>
-                            <input
-                              name="password"
-                              onChange={onChange}
-                              value={value}
-                              onBlur={onBlur}
-                              type="text"
-                              id="password"
-                              className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
-                              placeholder="*****"
-                            />
+                            <div className="relative">
+                              <input
+                                name="password"
+                                onChange={onChange}
+                                value={value}
+                                onBlur={onBlur}
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
+                                placeholder="*****"
+                              />
+                              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                <Button
+                                  variant="text"
+                                  onClick={toggleShowPassword}
+                                  className="p-2 text-gray-400 hover:text-gray-500"
+                                >
+                                  {" "}
+                                  <i
+                                    className={`fa-regular ${
+                                      showPassword ? "fa-eye-slash" : "fa-eye "
+                                    } `}
+                                  ></i>
+                                </Button>
+                              </div>
+                            </div>
                             {errors && errors.password ? (
                               <p className="mt-2 text-red-600 shake">
                                 <>
@@ -220,24 +239,30 @@ function Login({ userLogin, userData }) {
             </div>
             <div className="w-full h-[60vh] mb-12 md:mb-0 lg:h-full lg:sticky lg:top-0 order-0 lg:order-1">
               <div
-                className="w-full h-full  bg-no-repeat bg-cover relative p-5 sm:p-[36px_48px] bg-center"
-                style={{ backgroundImage: `url(${LoginBg})` }}
+                className="w-full h-full relative p-5 sm:p-[36px_48px] bg-[#0096D8]"
               >
                 <div className="py-5">
                   <div className="flex justify-center items-center gap-3">
                     <Link to="/login">
-                      <button className=" text-white text-base w-max uppercase font-semibold px-3">
+                      <Button
+                        variant="filled"
+                        color="white"
+                        className="text-[#0096D8] text-base font-semibold bg-white"
+                      >
                         Sign in
-                      </button>
+                      </Button>
                     </Link>
                     <Link to="/signup">
-                      <button className="bg-[#0096D8] rounded p-[17px_40px] text-white text-base w-max uppercase font-semibold border border-[#0096D8]">
+                      <Button
+                        variant="text"
+                        className="text-white text-base font-semibold"
+                      >
                         Sign up
-                      </button>
+                      </Button>
                     </Link>
                   </div>
                 </div>
-                <div className="absolute bottom-7 sm:left-14 left-5 right-5 sm:right-14 bg-[rgba(38_50_56_0.24)] backdrop-blur-xl rounded-3xl p-9">
+                <div className="absolute bottom-7 sm:left-14 left-5 right-5 sm:right-14 bg-white bg-opacity-30 backdrop-blur-xl rounded-3xl p-9">
                   <p className="text-white sm:text-xl font-medium">
                     “ The company I selected was great! They responded timely to
                     my request, completed the work product early, always

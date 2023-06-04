@@ -1,4 +1,4 @@
-import { LOGIN, LOGIN_ERROR } from "../constants";
+import { LOGIN, LOGIN_ERROR, LOGOUT } from "../constants";
 
 const initialState = {
   data: null,
@@ -12,10 +12,8 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case LOGIN:
-      // console.log(payload)
       const { error } = payload;
       if (error) {
-        // console.log(error);
         return {
           ...state,
           data: payload,
@@ -23,13 +21,16 @@ export default function (state = initialState, action) {
           isLogedIn: false,
         };
       } else {
-        console.log('Data Aya')
         return {
           ...state,
           data: payload,
           isLoading: false,
           isLogedIn: true,
         };
+    }
+    case "LOGOUT":
+      return{
+        initialState
       }
     case LOGIN_ERROR:
       return {
