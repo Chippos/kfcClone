@@ -6,18 +6,23 @@ import { userLogin } from "../../AppStore/actions/loginAuth";
 import { connect } from "react-redux";
 import { Button, Spinner, Alert } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
+
 
 function Login({ userLogin, userData }) {
   const Navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [timer, setTimer] = useState(null);
+
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
   const {
     control,
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -40,36 +45,19 @@ function Login({ userLogin, userData }) {
 
     userLogin(formData);
     setIsLoading(false);
+    if(userData?.data?.error){
+      toast.error(userData.data.error)
+    }else{
+      console.log(userData.initialState)
+      toast.success('Successfully logged In')
+      Navigate('/')
+    }
+    console.log(userData)
   };
 
-  useEffect(() => {
-    if (userData?.data?.error) {
-      setOpen(true);
-    } else {
-      setOpen(false);
-    }
-    if (userData.isLogedIn) {
-      Navigate("/");
-    }
-  }, [userData]);
-
-  console.log(userData);
   return (
     <>
       <section className="h-screen relative">
-        <Alert
-          open={open}
-          color="red"
-          className="max-w-lg absolute left-2/4 -translate-x-2/4 z-10 !transform top-5"
-          onClose={() => setOpen(false)}
-          animate={{
-            mount: { y: 0 },
-            unmount: { y: 100 },
-          }}
-        >
-          {userData?.data?.error}
-        </Alert>
-
         <div className="h-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 h-full text-gray-800 w-full">
             <div className="w-full h-full  px-4 py-5 sm:px-[100px] lg:my-0 order-1 lg:order-0">
@@ -112,23 +100,27 @@ function Login({ userLogin, userData }) {
                               onBlur={onBlur}
                               type="text"
                               id="email"
+                              {...register("email", {
+                                required: "This field is required.",
+                                pattern: {
+                                  value:
+                                    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                                  message: "Email is Invalid",
+                                },
+                              })}
                               className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                               placeholder="Email Address"
                             />
-                            {errors && errors.email ? (
-                              <p className="mt-2 text-red-600 shake">
-                                <>
-                                  <i className="fa-solid fa-circle-exclamation mr-1"></i>{" "}
-                                  Email is required
-                                </>
-                              </p>
-                            ) : (
-                              ""
-                            )}
                           </>
                         )}
                         name="email"
                       />
+                      {errors.email && (
+                        <p className="mt-2 text-red-600 shake">
+                          <i className="fa-solid fa-circle-exclamation mr-1"></i>{" "}
+                          {errors.email.message}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <div className="flex justify-between items-center">
@@ -158,6 +150,9 @@ function Login({ userLogin, userData }) {
                                 onBlur={onBlur}
                                 type={showPassword ? "text" : "password"}
                                 id="password"
+                                {...register("password", {
+                                  required: "This field is required.",
+                                })}
                                 className="bg-white border border-[#E7EFFF] text-gray-900 text-sm rounded-md ring ring-transparent focus:ring-[#0097d846] focus:border-[#0096D8]  block w-full p-4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-none"
                                 placeholder="*****"
                               />
@@ -176,20 +171,16 @@ function Login({ userLogin, userData }) {
                                 </Button>
                               </div>
                             </div>
-                            {errors && errors.password ? (
-                              <p className="mt-2 text-red-600 shake">
-                                <>
-                                  <i className="fa-solid fa-circle-exclamation mr-1"></i>{" "}
-                                  Password is required
-                                </>
-                              </p>
-                            ) : (
-                              ""
-                            )}
                           </>
                         )}
                         name="password"
                       />
+                      {errors.password && (
+                        <p className="mt-2 text-red-600 shake">
+                          <i className="fa-solid fa-circle-exclamation mr-1"></i>{" "}
+                          {errors.password.message}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <div className="mt-12 mb-14">
@@ -238,9 +229,7 @@ function Login({ userLogin, userData }) {
               </div>
             </div>
             <div className="w-full h-[60vh] mb-12 md:mb-0 lg:h-full lg:sticky lg:top-0 order-0 lg:order-1">
-              <div
-                className="w-full h-full relative p-5 sm:p-[36px_48px] bg-[#0096D8]"
-              >
+              <div className="w-full h-full relative p-5 sm:p-[36px_48px] bg-[#0096D8]">
                 <div className="py-5">
                   <div className="flex justify-center items-center gap-3">
                     <Link to="/login">

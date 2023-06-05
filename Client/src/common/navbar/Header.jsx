@@ -16,10 +16,7 @@ import UserDropdown from "../UserLoggedIn/UserDropdown";
 function navbar({ openDrawer, cartData, userData }) {
   const [openNav, setOpenNav] = useState(false);
   const { quantity, addedItems } = cartData;
-
   const { data } = userData;
-  console.log(data);
-
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -97,7 +94,7 @@ function navbar({ openDrawer, cartData, userData }) {
                 </Button>
               </Link>
             )}
-             {data?.username ? <UserDropdown data={data} /> : ''}
+            {data?.username ? <UserDropdown data={data} /> : ""}
             <Button
               variant="text"
               className="text-white bg-[#0096D8] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-base  text-center lg:hidden px-2 py-2"

@@ -3,7 +3,7 @@ import axios from "axios";
 import { SignupBg, SiteLogo } from "../../assets";
 import { Link, NavLink } from "react-router-dom";
 import { Button, Typography, Alert } from "@material-tailwind/react";
-
+import toast from 'react-hot-toast';
 function Signup() {
   const [user, setUser] = useState({
     username: "",
@@ -11,11 +11,9 @@ function Signup() {
     password: "",
     cpassowrd: "",
   });
+  
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [open, setOpen] = useState(true);
-  const [alertShow, setAlertShow] = useState(false);
-  const [existed, setExisted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleUser = (e) => {
@@ -127,24 +125,26 @@ function Signup() {
         }
       )
       .then((res) => {
-        if (res.data == "existed") {
-          setExisted(true);
-          setAlertShow(true);
-        } else if (res.data == "notExisted") {
-          setAlertShow(true);
+        if (res.data.error) {
+          toast.error(res.data.error)
+        } else if (res.data.success) {
+          toast.success(res.data.success)
         }
       })
       .catch((e) => {
-        alert("Wrong Detail");
+        // alert("Wrong Detail");
         console.log(e);
       });
   };
+
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       registerUser();
     }
   }, [formErrors]);
+
+
 
   // Text Animations
   useEffect(() => {
@@ -180,40 +180,6 @@ function Signup() {
       <section className="h-screen relative">
         <div className="h-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 h-full text-gray-800 w-full">
-            {alertShow ? (
-              <Alert
-                open={open}
-                color={existed ? "blue" : "green"}
-                onClose={() => setOpen(false)}
-                animate={{
-                  mount: { y: 0 },
-                  unmount: { y: 100 },
-                }}
-                className="fixed top-10 z-10 left-5 max-w-md w-full "
-              >
-                <div className="flex justify-start items-center gap-1">
-                  {existed
-                    ? "User Already Exist"
-                    : "Successfully Signup Redirecting to Login!"}
-                  {existed ? (
-                    <NavLink to="/login">
-                      <Button
-                        variant="text"
-                        color="white"
-                        size="sm"
-                        className="text-base font-normal px-2 py-1 capitalize "
-                      >
-                        Go to login Page
-                      </Button>
-                    </NavLink>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </Alert>
-            ) : (
-              ""
-            )}
             <div className="w-full h-full  px-4 py-5 sm:px-[100px] lg:my-0 order-1 lg:order-0">
               <div className="w-full h-full max-w-[580px] mx-auto">
                 <div className="mb-10 lg:mb-32">

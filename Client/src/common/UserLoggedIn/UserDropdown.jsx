@@ -13,7 +13,6 @@ import { getUser } from "../../AppStore/actions/loginAuth";
 
 
 function UserDropdown({data, getUser}) {
-  console.log(data)
   const {username, email} = data
   const firstAlphabet = username ? username.charAt(0).toUpperCase() : '';
   return (

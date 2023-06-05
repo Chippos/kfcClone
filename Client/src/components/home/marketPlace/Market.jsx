@@ -8,10 +8,6 @@ import card3 from '../../../assets/images/category-3.png'
 
 
 function Market({ cartData }) {
-
- 
-
-  console.log(cartData);
   return (
     <>
       <section className="my-20 sm:my-40">

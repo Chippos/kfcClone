@@ -1,6 +1,6 @@
 import React from 'react'
 import Hero from '../common/Hero';
-import CheckCart from '../components/Cart';
+import CheckCart from '../components/Cart/CartInfo';
 function CheckOut() {
   return (
     <>

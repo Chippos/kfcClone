@@ -10,11 +10,14 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./AppStore/store";
 import { PersistGate } from "redux-persist/integration/react";
 
+//Toast Notification
+import {Toaster} from 'react-hot-toast'
 
 function App() {
   return (
     <Provider store={store} >
       <PersistGate persistor={persistor}>
+        <Toaster position="top-center" toastOptions={{duration: 2000}}/>
         <Router>
           <ScrollTop/>
           <Routing />

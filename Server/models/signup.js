@@ -18,6 +18,11 @@ const signupSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    verified: {
+        type: Boolean,
+        default: false,
+    }
+
 });
 const User = mongoose.model("User", signupSchema);
 
