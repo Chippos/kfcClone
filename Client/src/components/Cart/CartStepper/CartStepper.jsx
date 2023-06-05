@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Stepper, Step, Button, Typography } from "@material-tailwind/react";
 
 function CartStepper({
-  handleNext,
-  handlePrev,
   activeStepState,
   isLastStepState,
   isFirstStepState,
@@ -22,7 +20,7 @@ function CartStepper({
           isFirstStep={(value) => setIsFirstStep(value)}
         >
           <Step>
-            <i className="fa-regular fa-check"></i>
+            {activeStep > 0 ?  <i className="fa-regular fa-check"></i> : '1' }
             <div className="absolute -bottom-[2.5rem] w-max text-center">
               <Typography
                 variant="h6"
@@ -33,7 +31,7 @@ function CartStepper({
             </div>
           </Step>
           <Step>
-            <i className="fa-regular fa-check"></i>
+          {activeStep > 1 ?  <i className="fa-regular fa-check"></i> : '2' }
             <div className="absolute -bottom-[2.5rem] w-max text-center">
               <Typography
                 variant="h6"
@@ -44,7 +42,7 @@ function CartStepper({
             </div>
           </Step>
           <Step>
-            <i className="fa-regular fa-check"></i>
+          {activeStep > 2 ?  <i className="fa-regular fa-check"></i> : '3' }
             <div className="absolute -bottom-[2.5rem] w-max text-center">
               <Typography
                 variant="h6"
@@ -55,14 +53,6 @@ function CartStepper({
             </div>
           </Step>
         </Stepper>
-        <div className="mt-20 flex justify-between">
-          <Button onClick={handlePrev} disabled={isFirstStep}>
-            Prev
-          </Button>
-          <Button onClick={handleNext} disabled={isLastStep}>
-            Next
-          </Button>
-        </div>
       </div>
     </>
   );
