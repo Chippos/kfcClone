@@ -8,6 +8,7 @@ const config = {
 };
 
 export const addProduct = (formData) => async (dispatch) => {
+  console.log("Redux", formData);
   try {
     const res = await axios.post("api/", formData, config);
     dispatch({
