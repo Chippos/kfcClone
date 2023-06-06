@@ -5,6 +5,8 @@ function CartStepper({
   activeStepState,
   isLastStepState,
   isFirstStepState,
+  handleNext,
+  handlePrev
 }) {
   const [activeStep, setActiveStep] =activeStepState;
   const [isLastStep, setIsLastStep] = isLastStepState;
@@ -30,7 +32,7 @@ function CartStepper({
               </Typography>
             </div>
           </Step>
-          <Step>
+          <Step onClick={handlePrev} className="cursor-pointer">
           {activeStep > 1 ?  <i className="fa-regular fa-check"></i> : '2' }
             <div className="absolute -bottom-[2.5rem] w-max text-center">
               <Typography
@@ -41,7 +43,7 @@ function CartStepper({
               </Typography>
             </div>
           </Step>
-          <Step>
+          <Step onClick={handleNext} className="cursor-pointer">
           {activeStep > 2 ?  <i className="fa-regular fa-check"></i> : '3' }
             <div className="absolute -bottom-[2.5rem] w-max text-center">
               <Typography

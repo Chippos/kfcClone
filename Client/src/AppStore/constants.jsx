@@ -12,3 +12,8 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const ADD_CART_INC = "ADD_CART_INC";
 export const ADD_CART_DEC = "ADD_CART_DEC";
 export const ADD_CART_DEL = "ADD_CART_DEL";
+
+//Order 
+export const ORDER = "ORDER";
+export const ORDER_ERROR = "ORDER_ERROR"
+

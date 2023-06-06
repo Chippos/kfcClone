@@ -255,17 +255,3 @@ ul.navlinks li a.active {
 .shake {
   animation: shake 0.4s ease-in-out;
 }
-
-.animationtoTop{
-  animation: animateTop 0.5s cubic-bezier(0.65, 0, 0.35, 1) 0.2s 1 normal forwards;
-}
-
-@keyframes animateTop {
-	0% {
-		transform: translateY(150px);
-	}
-
-	100% {
-		transform: translateY(0);
-	}
-}
