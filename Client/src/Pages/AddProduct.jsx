@@ -1,14 +1,24 @@
-import React from 'react'
-import Form from '../components/AddProduct/Form';
-import HeroSection from '../components/AddProduct/HeroSection';
+import React, { useEffect } from "react";
+import Form from "../components/AddProduct/Form";
+import HeroSection from "../components/AddProduct/HeroSection";
+import { connect } from "react-redux";
+import { getShopData } from "../AppStore/actions/shop.activity";
 
-function AddProduct() {
+function AddProduct({ shopData, getShopData }) {
+  useEffect(() => {
+    getShopData();
+  }, []);
+
   return (
     <>
-      <HeroSection/>
-      <Form/>
+      <HeroSection />
+      <Form formDataMarkup={shopData} />
     </>
-  )
+  );
 }
 
-export default AddProduct;
+const mapStateToProps = (state) => ({
+  shopData: state.shop,
+});
+
+export default connect(mapStateToProps, { getShopData })(AddProduct);
