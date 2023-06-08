@@ -5,7 +5,7 @@ const User = require('./signup')
 
 // user_id, total_price, 
 
-const orderSchema = new mongoose.Schema({
+const orderLocationSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -30,15 +30,34 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  subtotal: {
+})
+
+const itemsSchema = new mongoose.Schema({
+  addedItems: {
+    type : [Array],
+    required: true,
+  },
+  subTotal: {
     type: Number,
     required: true,
   },
-  user: {
+})
+
+const orderSchema = new mongoose.Schema({
+  orderdetail: {
+    type: itemsSchema,
+    required: true,
+  },
+  orderlocation : {
+    type: orderLocationSchema,
+    required: true,
+  },
+  user_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: User,
   },
-
+},{
+  timestamps: true,
 });
 const Order = mongoose.model("Order", orderSchema);
 

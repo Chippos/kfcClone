@@ -21,7 +21,10 @@ function shop({ shopData, addToCart }) {
 
   const [filterProducts, setFilterProducts] = useState([]);
   
-  const {data: {productsData, categoriesData}} = shopData
+  
+  // console.log(shopData)
+    const {data: {productsData, categoriesData}} = shopData
+  
 
   // set Products on Button Click
   const handleCategory = (value) => { 
@@ -31,7 +34,9 @@ function shop({ shopData, addToCart }) {
 
   
   useEffect(() => {
+    if(shopData.data.productsData){
     setProducts([...productsData])
+    }
   }, []);
 
   useEffect(()=> {
@@ -83,7 +88,7 @@ function shop({ shopData, addToCart }) {
       <div className='container mx-auto py-8 px-4'>
         <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'>
           {!shopData.isLoading && shopData.data ? (
-            filterProducts?.map((item) => (
+            filterProducts.map((item) => (
               <Card key={item._id} className='mt-6 '>
                 <CardHeader color='blue-gray' className='relative h-56'>
                   <img

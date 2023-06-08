@@ -5,5 +5,6 @@ import SignUp from "./SignUp";
 import Shop from "./shop";
 import AddProduct from "./AddProduct";
 import CheckOut from "./CheckOut";
+import MyOrder from "./MyOrder";
 
-export { Home, Login, NotFound, SignUp, Shop, AddProduct, CheckOut};
+export { Home, Login, NotFound, SignUp, Shop, AddProduct, CheckOut, MyOrder};

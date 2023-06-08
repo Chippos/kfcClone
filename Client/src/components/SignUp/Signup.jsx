@@ -132,7 +132,6 @@ function Signup() {
         }
       })
       .catch((e) => {
-        // alert("Wrong Detail");
         console.log(e);
       });
   };

@@ -6,27 +6,31 @@ import {
   MenuItem,
   Avatar,
   Typography,
-  Button
+  Button,
 } from "@material-tailwind/react";
 import { connect } from "react-redux";
 import { getUser } from "../../AppStore/actions/loginAuth";
+import { NavLink } from "react-router-dom";
 
-
-function UserDropdown({data, getUser}) {
-  const {username, email} = data
-  const firstAlphabet = username ? username.charAt(0).toUpperCase() : '';
+function UserDropdown({ data, getUser }) {
+  const { username, email } = data;
+  const firstAlphabet = username ? username.charAt(0).toUpperCase() : "";
   return (
     <>
       <Menu>
         <MenuHandler>
-          <Button size="lg"  color="white" className="flex justify-center items-center gap-3 bg-gray-400 text-white rounded-full h-10 w-10 p-0">
+          <Button
+            size="lg"
+            color="white"
+            className="flex justify-center items-center gap-3 bg-gray-400 text-white rounded-full h-10 w-10 p-0"
+          >
             {firstAlphabet}
           </Button>
         </MenuHandler>
         <MenuList>
-        <MenuItem className="flex items-center gap-2">
+          <MenuItem className="flex items-center gap-2">
             <Typography variant="small" className="font-normal capitalize">
-              Mr: <strong>{username}</strong> 
+              Mr: <strong>{username}</strong>
             </Typography>
           </MenuItem>
           <MenuItem className="flex items-center gap-2">
@@ -35,12 +39,17 @@ function UserDropdown({data, getUser}) {
             </Typography>
           </MenuItem>
           <MenuItem className="flex items-center gap-2">
-            <Typography variant="small" className="font-normal">
-              Edit Profile
-            </Typography>
+            <NavLink to="myorder">
+              <Typography variant="small" className="font-normal">
+                My Orders
+              </Typography>
+            </NavLink>
           </MenuItem>
           <hr className="my-2 border-blue-gray-50" />
-          <MenuItem className="flex items-center gap-2 " onClick={() => getUser("LOGOUT")}>
+          <MenuItem
+            className="flex items-center gap-2 "
+            onClick={() => getUser("LOGOUT")}
+          >
             <Typography variant="small" className="font-normal">
               Sign Out
             </Typography>
@@ -57,8 +66,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: (type) => dispatch(getUser( type)),
+    getUser: (type) => dispatch(getUser(type)),
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(UserDropdown);
+export default connect(mapStateToProps, mapDispatchToProps)(UserDropdown);

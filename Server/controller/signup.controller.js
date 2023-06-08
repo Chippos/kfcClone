@@ -13,7 +13,7 @@ const signupController = async (req, res) => {
     const check = await user.findOne({ email: email });
     if (check) {
       return res.json({
-         error: "Thi Email Is Already Taken"
+         error: "This Email Is Already Taken"
       })
       // res.json(error);
     } else {

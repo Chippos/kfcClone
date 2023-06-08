@@ -14,7 +14,15 @@ export default function (state = initialState, action) {
         ...state,
         data: payload,
     };
+    // case "EMPTY_ORDER":
+    //   console.log("Empty")
+    //   return {
+    //     ...state,
+    //     data: null,
+    //     error: null,
+    // };
     case ORDER_ERROR:
+      console.log(payload)
       return {
         ...state,
         error: payload,
