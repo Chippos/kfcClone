@@ -53,31 +53,43 @@ function Form({ formDataMarkup, addProduct }) {
           <Typography className="text-2xl font-bold">
             Add Details Here
           </Typography>
-          <div className="grid sm:grid-cols-2 gap-6 mt-4 sm:place-items-end">
-            <Input size="lg" label="Title" type="text" />
-            <Input size="lg" label="Price" type="number" />
-            <Input size="lg" label="Image Url" type="text" />
-            {/* <Select
-              label="Select Category"
-              animate={{
-                mount: { y: 0 },
-                unmount: { y: 25 },
-              }}
-            >
-              {!shopData.isLoading && shopData.data ? (
-                data?.categoriesData?.map((item) => (
-                  <Option
-                    key={item._id}
-                    value={item.title}
-                    className="flex items-center gap-2"
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid sm:grid-cols-2 gap-6 mt-4 sm:place-items-end mb-6">
+              <Controller
+                control={control}
+                rules={{ required: true }}
+                render={({ field: { value, onChange, onBlur } }) => (
+                  <>
+                    <Input
+                      size="lg"
+                      value={value}
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      label="Title"
+                      type="text"
+                      error={errors.title ? true : false}
+                    />
+                  </>
+                )}
+                name="title"
+              />
+              <Controller
+                control={control}
+                render={({ field: { value, onChange, onBlur } }) => (
+                  <Select
+                    label="Select Category"
+                    animate={{
+                      mount: { y: 0 },
+                      unmount: { y: 25 },
+                    }}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    value={value}
                   >
                     {!formDataMarkup.isLoading && formDataMarkup.data ? (
                       formDataMarkup.data?.categoriesData?.map((item) => (
                         <Option
                           key={item._id}
-                          onChange={onChange}
-                          onBlur={onBlur}
-                          value={value}
                           className="flex items-center gap-2"
                         >
                           {item.title}
@@ -89,7 +101,7 @@ function Form({ formDataMarkup, addProduct }) {
                   </Select>
                 )}
                 name="category"
-              /> */}
+              />
               <Controller
                 control={control}
                 rules={{ required: true }}

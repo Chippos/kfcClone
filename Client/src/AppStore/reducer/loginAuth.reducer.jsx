@@ -27,11 +27,15 @@ export default function (state = initialState, action) {
           isLoading: false,
           isLogedIn: true,
         };
-    }
-    case "LOGOUT":
-      return{
-        initialState
       }
+    case "LOGOUT":
+      return {
+        ...state,
+        data: null,
+        isLoading: false,
+        isLogedIn: false,
+        error: null,
+      };
     case LOGIN_ERROR:
       return {
         ...state,

@@ -3,11 +3,10 @@ import { useForm, Controller } from "react-hook-form";
 import { LoginBg, SiteLogo } from "../../assets";
 import { Link, NavLink } from "react-router-dom";
 import { userLogin } from "../../AppStore/actions/loginAuth";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Button, Spinner, Alert } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import toast from 'react-hot-toast';
-
+import toast from "react-hot-toast";
 
 function Login({ userLogin, userData }) {
   const Navigate = useNavigate();
@@ -15,12 +14,12 @@ function Login({ userLogin, userData }) {
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [timer, setTimer] = useState(null);
-
+  const reducerData = useSelector((state) => state.login.data);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  
+
   const {
     control,
     register,
@@ -44,16 +43,16 @@ function Login({ userLogin, userData }) {
       route: "api/login",
     };
 
-    userLogin(formData);
-    setIsLoading(false);
-    if(userData?.data?.error){
-      toast.error(userData.data.error)
-    }else{
-      console.log(userData.initialState)
-      toast.success('Successfully logged In')
-      Navigate('/')
-    }
-    console.log(userData)
+    userLogin(formData).then((res) => {
+      console.log(res);
+      if (res.res.data.error) {
+        toast.error(res.res.data.error);
+      } else {
+        toast.success("Successfully logged In");
+        Navigate("/");
+      }
+      setIsLoading(false);
+    });
   };
 
   return (
@@ -200,16 +199,21 @@ function Login({ userLogin, userData }) {
                           <Button
                             color={"white"}
                             type="submit"
-                            className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8]"
+                            className="bg-[#0096D8] rounded p-[17px_24px] text-white text-base w-max uppercase font-semibold hover:text-[#0096D8] hover:bg-white border border-[#0096D8] flex justify-start items-center gap-4"
+                            disabled={isLoading ? true : false}
                             style={{
                               boxShadow: "0px 18px 20px rgba(0, 150, 216, 0.1)",
                             }}
                           >
                             Sign IN Now{" "}
-                            <i
-                              className="fa fa-long-arrow-right ml-5"
-                              aria-hidden="true"
-                            ></i>
+                            {isLoading ? (
+                              <Spinner className="h-6 w-6" />
+                            ) : (
+                              <i
+                                className="fa fa-long-arrow-right"
+                                aria-hidden="true"
+                              ></i>
+                            )}
                           </Button>
                         )}
                       </div>

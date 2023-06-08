@@ -2,23 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Button, Typography, Input, Textarea } from "@material-tailwind/react";
 import { connect } from "react-redux";
 import { addToCart } from "../../../AppStore/actions/shop.activity";
-import toast from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import CartStepper from "../CartStepper/CartStepper";
 import ConfirmOrder from "../ProceedToPay";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { placeOrder } from "../../../AppStore/actions/order.activity";
+import toast from "react-hot-toast";
 
 function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
   const { isLogedIn, data } = userData;
-  console.log(orderData);
   const Navigate = useNavigate();
-  // console.log(data);
 
   const [activeStep, setActiveStep] = useState(1);
   const [isLastStep, setIsLastStep] = useState(false);
   const [isFirstStep, setIsFirstStep] = useState(false);
+  const [orderConfirm, setOrderConfirm] = useState(false);
 
   const customStyle = {
     background: "white",
@@ -65,8 +64,6 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
   };
   const handlePrev = () => activeStep > 1 && setActiveStep((cur) => cur - 1);
 
-
-
   const { addedItems } = cartData;
   const totalPrice = addedItems.reduce((accumulator, item) => {
     return accumulator + item.price * item.quantity;
@@ -79,7 +76,6 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
       Navigate("/");
     }
   }, [activeStep, isLogedIn]);
-
 
   const {
     register,
@@ -97,40 +93,38 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
     },
   });
 
-  const onSubmit = (value) => {
+  const onSubmit = async (value) => {
     const { name, number, house, street, area, delivery } = value;
-    const { id } = data
+    const { id } = data;
+
     const formData = {
+      route: "/api/checkout",
+      orderlocation: {
         name: name,
         number: number,
         house: house,
         street: street,
         area: area,
         delivery: delivery,
-        userId: id,
+      },
+      orderdetail: {
+        addedItems: addedItems,
         subTotal: subTotal,
-        isLoading: true,
-        route: "/api/checkout",
+      },
+      user_id: id,
     };
-    console.log(typeof(subTotal))
-    // console.log(formData)
-    
 
-    
-    placeOrder(formData);
-    // alert('skdfajlsdk')
-
-    // userLogin(formData);
-    // setIsLoading(false);
-    // if (userData?.data?.error) {
-    //   toast.error(userData.data.error);
-    // } else {
-    //   console.log(userData.initialState);
-    //   toast.success("Successfully logged In");
-    //   Navigate("/");
-    // }
-    // console.log(userData);
+    placeOrder(formData).then((res) => {
+      if (res.res.data.errors) {
+        toast.error("Order is not confirmed please try again after a moment.");
+      } else {
+        toast.success("Order is Confirmed");
+        addToCart(null, "CLEAR_CART");
+        Navigate("/shop");
+      }
+    });
   };
+
   return (
     <>
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0 mt-10">
@@ -445,6 +439,38 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
                                 </p>
                               )}
                             </div>
+                            <div className="col-span-2">
+                              <Controller
+                                control={control}
+                                rules={{ required: true }}
+                                name="delivery"
+                                render={({
+                                  field: { value, onChange, onBlur },
+                                }) => (
+                                  <>
+                                    <Textarea
+                                      name="delivery"
+                                      onChange={onChange}
+                                      value={value}
+                                      onBlur={onBlur}
+                                      type="text"
+                                      id="delivery"
+                                      size="lg"
+                                      label="Delivery"
+                                      {...register("delivery", {
+                                        required: "This field is required.",
+                                      })}
+                                    />
+                                  </>
+                                )}
+                              />
+                              {errors.delivery && (
+                                <p className="mt-2 text-red-600 shake">
+                                  <i className="fa-solid fa-circle-exclamation mr-1"></i>{" "}
+                                  {errors.delivery.message}
+                                </p>
+                              )}
+                            </div>
                           </div>
                         </div>
                         <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 w-full lg:w-1/3">
@@ -491,7 +517,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (data, type) => dispatch(addToCart(data, type)),
     placeOrder: (data, type) => dispatch(placeOrder(data, type)),
-
   };
 };
 

@@ -11,16 +11,14 @@ const config = {
 export const placeOrder = (formData) => async (dispatch) => {
   try {
     const res = await axios.post(formData.route , formData, config);
-    return{
-      res
-    }
+    
     dispatch({
       type: ORDER,
       payload: res.data,
     });
-    // return{
-    //   res,
-    // }
+    return{
+      res,
+    }
   } catch (error) {
     const errors = error.message;
     dispatch({

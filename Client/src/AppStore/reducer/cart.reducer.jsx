@@ -82,7 +82,16 @@ export default function (state = initialState, action) {
           quantity: (state.quantity -= 1),
         };
       }
-      break;
+    case "CLEAR_CART":
+      console.log('Clear Cart Hit')
+      return {
+        ...state,
+        data: null,
+        isLoading: true,
+        error: null,
+        addedItems: [],
+        quantity: 0,
+      }
     default:
       return state;
   }

@@ -4,10 +4,10 @@ const orderController = async (req, res) => {
   const {orderlocation: {name, number, house, street, area, delivery}, orderdetail: {addedItems, subTotal}, user_id} = req.body;
 
   const orderData = {
-    // orderdetail: {
-    //   addedItems: addedItems,
-    //   subTotal: subTotal,
-    // },
+    orderdetail: {
+      addedItems: addedItems,
+      subTotal: subTotal,
+    },
     orderlocation : {
       name: name,
       number: number,

@@ -14,6 +14,9 @@ export const userLogin = (formData) => async (dispatch) => {
       type: LOGIN,
       payload: res.data,
     });
+    return{
+      res
+    }
   } catch (error) {
     const errors = error.message;
     dispatch({
