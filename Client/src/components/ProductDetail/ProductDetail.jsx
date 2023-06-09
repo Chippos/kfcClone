@@ -13,7 +13,6 @@ function ProductDetail({ productData, findSingleProduct, addToCart }) {
 
   const { id } = useParams();
   const { data } = productData;
-  console.log(data);
 
   useEffect(() => {
     findSingleProduct(id);
@@ -74,10 +73,10 @@ function ProductDetail({ productData, findSingleProduct, addToCart }) {
                         setHideCartBtn(singleProduct?._id);
                       }}
                       className="flex justify-start items-center gap-1"
-                      disabled={hideCartBtn === singleProduct._id ? true : false}
+                      disabled={hideCartBtn === singleProduct?._id ? true : false}
                     >
                       {`${hideCartBtn === singleProduct._id ? "Added" : "Add to Cart"}`}{" "}
-                      {hideCartBtn === singleProduct._id ? (
+                      {hideCartBtn === singleProduct?._id ? (
                         <Spinner className="h-4 w-4" />
                       ) : (
                         ""

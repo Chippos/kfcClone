@@ -12,79 +12,30 @@ function Footer() {
               <ul className='space-y-4 mt-7'>
                 <li>
                   <a
-                    href='#'
+                    href='/'
                     className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Php
+                    Lorem Ipsum
                   </a>
                 </li>
                 <li>
                   <a
-                    href='#'
+                    href='/'
                     className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Programming
+                    Lorem Ipsum
                   </a>
                 </li>
                 <li>
                   <a
-                    href='#'
+                    href='/'
                     className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    SEO
+                    Lorem Ipsum
                   </a>
                 </li>
                 <li>
                   <a
-                    href='#'
+                    href='/'
                     className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Graphics Designing
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='#'
-                    className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Video Editing
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='#'
-                    className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Content Writing
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='#'
-                    className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Digital Marketing
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='#'
-                    className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Wordpress
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='#'
-                    className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Bug Fixes
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='#'
-                    className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Programming Tech
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='#'
-                    className='text-[#263238] text-base font-medium hover:text-[#0096D8]'>
-                    Web Development
+                    Lorem Ipsum
                   </a>
                 </li>
               </ul>
@@ -234,7 +185,7 @@ function Footer() {
             </a>
             <div>
               <p className='text-[#263238] text-base font-medium'>
-                © Fiverr International Ltd. 2022
+                © KFC  Ltd. 2023
               </p>
             </div>
           </div>

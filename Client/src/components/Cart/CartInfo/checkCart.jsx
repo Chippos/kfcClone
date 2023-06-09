@@ -21,7 +21,7 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
 
   const customStyle = {
     background: "white",
-    color: "white",
+    color: "red",
     borderTop: "2px solid #e41749",
     borderRadius: "4px",
   };
@@ -48,7 +48,8 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
           icon: (
             <>
               <svg
-                classname="fill-current h-6 w-6 text-red-900 mr-4"
+                classname=" h-6 w-6 text-red-900 mr-4"
+                style={{width: '2.5rem', color: 'red !important', fill: 'currentcolor'}}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >

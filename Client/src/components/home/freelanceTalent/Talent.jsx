@@ -16,7 +16,7 @@ function Talent() {
                 A Whole World of
                 <span className="text-[#0096D8]">
                   {" "}
-                  Freelance Talent at Your Fingertips
+                  Meal at Your Fingertips
                 </span>
               </h1>
               <div className="mt-10 grid grid-cols-2 gap-8">
