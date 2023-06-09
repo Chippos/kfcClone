@@ -2,24 +2,42 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { findSingleProduct } from "../../AppStore/actions/singleProduct";
-function ProductDetail({ productData, findSingleProduct }) {
+import { addToCart } from "../../AppStore/actions/shop.activity";
+
+import { Button, Spinner } from "@material-tailwind/react";
+function ProductDetail({ productData, findSingleProduct, addToCart }) {
   const [singleProduct, setSingleProduct] = useState({});
+  const [hideCartBtn, setHideCartBtn] = useState(-1);
+  const [timer, setTimer] = useState(null);
+
+
   const { id } = useParams();
   const { data } = productData;
   console.log(data);
+
   useEffect(() => {
     findSingleProduct(id);
   }, []);
-  console.log(singleProduct);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setHideCartBtn(-1);
+    }, 2000);
+    setTimer(id);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [hideCartBtn]);
+
   useEffect(() => {
     setSingleProduct(data);
   }, [productData]);
   return (
     <>
       {productData?.data && (
-        <div className="">
+        <div className="shadow-lg rounded-lg my-6">
           <section>
-            <div className="relative mx-auto max-w-screen-xl px-4 py-8">
+            <div className="relative mx-auto max-w-screen-2xl p-10">
               <div className="grid grid-cols-1 items-start gap-8 md:grid-cols-3">
                 <div className="grid gap-4 grid-cols-1">
                   <img
@@ -38,7 +56,9 @@ function ProductDetail({ productData, findSingleProduct }) {
                       <p className="text-sm">Highest Rated Product</p>
                     </div>
 
-                    <p className="text-lg font-bold">{singleProduct?.price}</p>
+                    <p className="text-lg font-bold">
+                      Rs: {singleProduct?.price}
+                    </p>
                   </div>
 
                   <div className="mt-4">
@@ -48,12 +68,21 @@ function ProductDetail({ productData, findSingleProduct }) {
                   </div>
 
                   <div className="mt-8 flex gap-4">
-                    <button
-                      type="submit"
-                      className="block rounded bg-green-600 px-5 py-3 text-xs font-medium text-white hover:bg-green-500"
+                    <Button
+                      onClick={() => {
+                        addToCart(singleProduct);
+                        setHideCartBtn(singleProduct?._id);
+                      }}
+                      className="flex justify-start items-center gap-1"
+                      disabled={hideCartBtn === singleProduct._id ? true : false}
                     >
-                      Add to Cart
-                    </button>
+                      {`${hideCartBtn === singleProduct._id ? "Added" : "Add to Cart"}`}{" "}
+                      {hideCartBtn === singleProduct._id ? (
+                        <Spinner className="h-4 w-4" />
+                      ) : (
+                        ""
+                      )}
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -71,6 +100,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     findSingleProduct: (id) => dispatch(findSingleProduct(id)),
+    addToCart: (data) => dispatch(addToCart(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
