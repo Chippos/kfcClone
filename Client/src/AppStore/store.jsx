@@ -10,6 +10,7 @@ const initialState = {};
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['single'],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

@@ -1,10 +1,7 @@
 import React from "react";
 import { marketPlace } from "../../../constants";
 import { connect } from "react-redux";
-// import { addToCart } from "../../AppStore/actions/shop.activity";
-import card1 from '../../../assets/images/category-1.png'
-import card2 from '../../../assets/images/category-2.png'
-import card3 from '../../../assets/images/category-3.png'
+import { NavLink } from "react-router-dom";
 
 
 function Market({ cartData }) {
@@ -18,64 +15,43 @@ function Market({ cartData }) {
             </h1>
           </div>
           <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-9 mt-[4.438rem]">
-            {/* {marketPlace.map((items, index)=>(
-                <a
-                href="#"
-                key={index}
-                className="group bg-white border border-[#E2EAED] rounded-[10px] py-9 px-10 transition-all duration-200 ease-linear hover:shadow-[0px_10px_30px_0.18px_#a0a0a02e] relative"
-              >
-                <div className="flex justify-between items-start gap-3">
-                    <div>
-                      <img className="group-hover:hidden" src={items.grayImg} alt="" />
-                      <img className="hidden group-hover:block" src={items.blueImg} alt="" />
-                    </div>
-                  <p className="text-[#6A6A6A] font-semibold text-lg ">
-                    <span> {items.number} </span> <br />
-                    Offers
-                  </p>
-                </div>
-                <div className="text-center mt-[6.5rem]">
-                  <h1 className="text-[#263238] font-bold text-3xl group-hover:text-[#0096D8] transition-all duration-200 ease-linear">
-                    {items.title}
-                  </h1>
-                </div>
-              </a>
-            ))} */}
-            <a
-              href="#"
-              className="group hover:bg-[#0096D8] bg-white border border-[#E2EAED] rounded-[10px] py-9 px-10 transition-all duration-200 ease-linear hover:shadow-[0px_10px_30px_0.18px_#a0a0a02e] flex justify-center items-center"
-            >
-              <div className="text-center w-full">
-                <i className="fa-solid fa-plus text-8xl group-hover:text-white transition-all duration-200 ease-linear"></i>
-                <h1 className="text-[#263238] font-bold text-3xl group-hover:text-white transition-all duration-200 ease-linear mt-6">
-                  View More
-                </h1>
-              </div>
-            </a>
-            <div
-             className="relative bg-gradient-to-tr bg-[#0096D8] border border-[#E2EAED] rounded-[10px] py-9 px-10 transition-all duration-200 ease-linear hover:shadow-[0px_10px_30px_0.18px_#a0a0a02e] flex justify-center items-center overflow-hidden"
-            >
-              <div
-                className="w-full"
-              >
-                <div className="flex justify-between items-start gap-3 w-full">
-                    {/* <div>
-                      {/* <img className="hidden group-hover:block" src={items.blueImg} alt="" /> 
-                    </div>*/}
-                      <img className="w-40 absolute right-4 top-4" src={card3} alt="" />
+            {marketPlace.map((item)=>(
+              <NavLink to="/shop" state={{ data: item.title}}>
+                <div className="card">
+                      <span className="icon">
+                        <img className="w-28 h-16" src={item.img} alt="" />
+                      </span>
+                      <h4>Get Started With</h4>
+                      <div className="h-16 overflow-hidden">
+                        <p className=" text-ellipsis line-clamp-2 text-2xl">{item.title}</p>
+                      </div>
+                      <p className="mt-1 articels-p">
+                        <i className="fa-light fa-arrow-right-long"></i>
+                      </p>
+                      <div className="shine"></div>
+                      <div className="background">
+                        <div className="tiles">
+                          <div className="tile tile-1"></div>
+                          <div className="tile tile-2"></div>
+                          <div className="tile tile-3"></div>
+                          <div className="tile tile-4"></div>
 
-                  <p className="text-white font-semibold text-lg ">
-                    <span> 255 </span> <br />
-                    Offers
-                  </p>
+                          <div className="tile tile-5"></div>
+                          <div className="tile tile-6"></div>
+                          <div className="tile tile-7"></div>
+                          <div className="tile tile-8"></div>
+
+                          <div className="tile tile-9"></div>
+                          <div className="tile tile-10"></div>
+                        </div>
+
+                        <div className="line line-1"></div>
+                        <div className="line line-2"></div>
+                        <div className="line line-3"></div>
+                      </div>
                 </div>
-                <div className="text-center mt-[6.5rem]">
-                  <h1 className="text-white font-bold text-3xl group-hover:text-[#0096D8] transition-all duration-200 ease-linear">
-                   EveryDay Value
-                  </h1>
-                </div>
-              </div>  
-            </div>
+              </NavLink>
+            ))}
           </div>
         </div>
       </section>

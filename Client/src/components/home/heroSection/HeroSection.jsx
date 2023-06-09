@@ -56,7 +56,7 @@ function HeroSection({ shopData, getShopData }) {
                         type="search"
                         id="search"
                         className="block w-full p-4 pl-10  text-gray-900 border-2 border-[#E2EAED] rounded-[10px] bg-white focus:ring-[#0096D8] focus:border-[#0096D8] placeholder:text-[#6A6A6A] text-base placeholder:text-xs sm:placeholder:text-base outline-none"
-                        placeholder="What service are you looking for today?"
+                        placeholder="Which meal are you looking for today?"
                         required
                       />
                       <Button

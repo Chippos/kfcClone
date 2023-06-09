@@ -47,7 +47,9 @@ import Sharing from './images/sharing-bg.jpg'
 import everydayvalue from './images/everydayvalue.jpg'
 import alacart from './images/alacart.jpg'
 import snacks from './images/snacks&bavrages.jpg'
-
+import card1 from './images/category-1.png'
+import card2 from './images/category-2.png'
+import card3 from './images/category-3.png'
 
 
 
@@ -101,4 +103,7 @@ export {
     everydayvalue,
     alacart,
     snacks,
+    card1,
+    card2,
+    card3
 }

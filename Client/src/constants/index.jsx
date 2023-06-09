@@ -40,6 +40,9 @@ import {
   everydayvalue,
   alacart,
   snacks,
+  card1,
+  card2,
+  card3,
 } from "../assets";
 
 const navLinks = [
@@ -125,52 +128,18 @@ const hoverCards = [
 const marketPlace = [
   {
     id: 1,
-    number: 256,
-    title: "Php",
-    grayImg: phpLogo,
-    blueImg: phpBlueLogo,
+    title: "Everyday Value",
+    img: card1,
   },
   {
     id: 2,
-    number: 256,
-    title: "SEO",
-    grayImg: seoLogo,
-    blueImg: seoBlueLogo,
+    title: "Ala Cart & Combos",
+    img: card2,
   },
   {
     id: 3,
-    number: 256,
-    title: "Programming",
-    grayImg: programmingLogo,
-    blueImg: programmingBlueLogo,
-  },
-  {
-    id: 4,
-    number: 256,
-    title: "Content Writer",
-    grayImg: cotentLogo,
-    blueImg: cotentBlueLogo,
-  },
-  {
-    id: 5,
-    number: 256,
-    title: "Video Editing",
-    grayImg: videoLogo,
-    blueImg: videoBlueLogo,
-  },
-  {
-    id: 6,
-    number: 256,
-    title: "Bug Fixing",
-    grayImg: bugLogo,
-    blueImg: bugBlueLogo,
-  },
-  {
-    id: 7,
-    number: 256,
-    title: "WordPress",
-    grayImg: wordpressLogo,
-    blueImg: wordpressBlueLogo,
+    title: "Signature Boxes",
+    img: card3,
   },
 ];
 

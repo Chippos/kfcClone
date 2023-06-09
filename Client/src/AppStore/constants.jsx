@@ -20,3 +20,8 @@ export const ORDER_ERROR = "ORDER_ERROR";
 //Add Product
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const ADD_PRODUCT_ERROR = "ADD_PRODUCT_ERROR";
+
+//Single Product
+export const SINGLE_PRODUCT = "SINGLE_PRODUCT"
+export const SINGLE_PRODUCT_ERROR = "SINGLE_PRODUCT_ERROR"
+

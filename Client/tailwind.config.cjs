@@ -17,7 +17,7 @@ module.exports =withMT({
       '2xl': "1536px",
     },
     fontFamily: {
-      sans: ["Gilroy", "sans-serif"],
+      sans: ["Montserrat", "sans-serif"],
     },
     extend: {},
   },

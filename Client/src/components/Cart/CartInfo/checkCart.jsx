@@ -32,11 +32,11 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
     } else {
       toast.error(
         <>
-          <div class="rounded-b text-red-900 ">
-            <div class="flex">
+          <div classname="rounded-b text-red-900 ">
+            <div classname="flex">
               <div>
-                <p class="font-bold">Please Login First To Proceed</p>
-                <p class="text-sm">
+                <p classname="font-bold">Please Login First To Proceed</p>
+                <p classname="text-sm">
                   Make sure you are login or proceed to login page to login.
                 </p>
               </div>
@@ -48,7 +48,7 @@ function checkCart({ cartData, addToCart, userData, orderData, placeOrder }) {
           icon: (
             <>
               <svg
-                class="fill-current h-6 w-6 text-red-900 mr-4"
+                classname="fill-current h-6 w-6 text-red-900 mr-4"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >
